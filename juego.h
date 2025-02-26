@@ -12,8 +12,9 @@ typedef struct {
 	int num_minas;
 	int num_descubiertas;
 } tJuego;
-//inicializar(juego);
-//inicializar(juego, nfils, ncols);
+
+inicializar(juego);
+inicializar(juego, nfils, ncols);
 dame_num_jugadas(juego);
 dame_num_filas(juego);
 dame_num_columnas(juego);
@@ -23,7 +24,6 @@ es_visible(juego, fila, columna);
 esta_marcada(juego, fila, columna);
 esta_vacia(juego, fila, columna);
 contiene_numero(juego, fila, columna);
-7
 dame_numero(juego, fila, columna);
 esta_completo(juego);
 mina_explotada(juego);
@@ -31,6 +31,6 @@ esta_terminado(juego);
 poner_mina(juego, fila, columna);
 marcar_desmarcar(juego, fila, columna);
 ocultar(juego, fila, columna);
-juega(juego, fila, columna, lista_pos)
+juega(juego, fila, columna, lista_pos);
 
 #endif 

@@ -1,7 +1,6 @@
 #include "tablero.h"
 
 #include <iostream>
-#include <fstream>
 
 
 void inicializar_tablero(tTablero tablero, int nfils, int ncols) {
