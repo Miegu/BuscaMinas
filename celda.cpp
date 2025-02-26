@@ -7,42 +7,43 @@ void inicializarCelda(tCelda& celda) {
     celda.numero = 0;
     celda.marcada = false;
 }
-int dame_estado(const tCelda& celda){
 
+tEstado dame_estado(const tCelda& celda){
+    return celda.estado;
 }
-int dame_numero(tCelda celda) {
-
+int dame_numero(const tCelda& celda) {
+    return celda.numero;
 }
-bool es_visible(tCelda celda) {
-
+bool es_visible(const tCelda& celda) {
+    return celda.visible;
 }
 bool es_mina(const tCelda& celda) {
-
+    return  dame_estado(celda) == MINA;
 }
-bool esta_vacia(tCelda celda) {
-
+bool esta_vacia(const tCelda& celda) {
+    return dame_estado(celda) == VACIA;
 }
-bool contiene_numero(tCelda celda) {
-
+bool contiene_numero(const tCelda& celda) {
+    return dame_estado(celda) == NUMERO;
 }
-bool esta_marcada(tCelda celda) {
-
+bool esta_marcada(const tCelda& celda) {
+    return celda.marcada;
 }
-void descubrir_celda(tCelda celda) {
-
+void descubrir_celda(tCelda& celda) {
+    celda.visible = true;
 }
-void ocultar_celda(tCelda celda) {
-
+void ocultar_celda(tCelda& celda) {
+    celda.visible = false;
 }
-void poner_mina(tCelda celda) {
-
+void poner_mina(tCelda& celda) {
+    celda.estado = MINA;
 }
-void marcar_celda(tCelda celda) {
-
+void marcar_celda(tCelda& celda) {
+    celda.marcada = true;
 }
-void desmarcar_celda(tCelda celda) {
-
+void desmarcar_celda(tCelda& celda) {
+    celda.marcada = false;
 }
-void poner_numero(tCelda celda, int num) {
-
+void poner_numero(tCelda& celda, int num) {
+    celda.numero = num;
 }
