@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Celda">
+      <UniqueIdentifier>{2b01f961-f83b-4f2b-bf70-8c9ed57eccb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tablero">
+      <UniqueIdentifier>{17ed61f3-1d9d-4f29-b8a8-2e6b2303f5f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Juego">
+      <UniqueIdentifier>{81a360c4-5053-443b-9662-23232d702da6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Listas">
+      <UniqueIdentifier>{bb8ce531-99cd-4d60-86db-74090baff1e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\IO">
+      <UniqueIdentifier>{ef25c96a-e43e-4622-b279-c7c4e6364041}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="celda.cpp">
+      <Filter>Source Files\Celda</Filter>
+    </ClCompile>
+    <ClCompile Include="tablero.cpp">
+      <Filter>Source Files\Tablero</Filter>
+    </ClCompile>
+    <ClCompile Include="juego.cpp">
+      <Filter>Source Files\Juego</Filter>
+    </ClCompile>
+    <ClCompile Include="listaUndo.cpp">
+      <Filter>Source Files\Listas</Filter>
+    </ClCompile>
+    <ClCompile Include="io.cpp">
+      <Filter>Source Files\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="listaPosiciones.cpp">
+      <Filter>Source Files\Listas</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="celda.h">
+      <Filter>Source Files\Celda</Filter>
+    </ClInclude>
+    <ClInclude Include="tablero.h">
+      <Filter>Source Files\Tablero</Filter>
+    </ClInclude>
+    <ClInclude Include="juego.h">
+      <Filter>Source Files\Juego</Filter>
+    </ClInclude>
+    <ClInclude Include="listaUndo.h">
+      <Filter>Source Files\Listas</Filter>
+    </ClInclude>
+    <ClInclude Include="io.h">
+      <Filter>Source Files\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="listaPosiciones.h">
+      <Filter>Source Files\Listas</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
