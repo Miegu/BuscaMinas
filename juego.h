@@ -13,24 +13,23 @@ typedef struct {
 	int num_descubiertas;
 } tJuego;
 
-inicializar(juego);
-inicializar(juego, nfils, ncols);
-dame_num_jugadas(juego);
-dame_num_filas(juego);
-dame_num_columnas(juego);
-dame_num_minas(juego);
-contiene_mina(juego, fila, columna);
-es_visible(juego, fila, columna);
-esta_marcada(juego, fila, columna);
-esta_vacia(juego, fila, columna);
-contiene_numero(juego, fila, columna);
-dame_numero(juego, fila, columna);
-esta_completo(juego);
-mina_explotada(juego);
-esta_terminado(juego);
-poner_mina(juego, fila, columna);
-marcar_desmarcar(juego, fila, columna);
-ocultar(juego, fila, columna);
-juega(juego, fila, columna, lista_pos);
+void inicializar(tJuego& juego, int nfils, int ncols);
+int dame_num_jugadas(const tJuego& juego);
+int dame_num_filas(const tJuego& juego);
+int dame_num_columnas(const tJuego& juego);
+int dame_num_minas(const tJuego& juego);
+bool contiene_mina(const tJuego& juego, int fila, int columna);
+bool es_visible(const tJuego& juego, int fila, int columna);
+bool esta_marcada(const tJuego& juego, int fila, int columna);
+bool esta_vacia(const tJuego& juego, int fila, int columna);
+bool contiene_numero(const tJuego& juego, int fila, int columna);
+int dame_numero(const tJuego& juego, int fila, int columna);
+bool esta_completo(const tJuego& juego);
+bool mina_explotada(const tJuego& juego);
+bool esta_terminado(const tJuego& juego);
+void poner_mina(tJuego& juego, int fila, int columna);
+void marcar_desmarcar(tJuego& juego, int fila, int columna);
+void ocultar(tJuego& juego, int fila, int columna);
+void juega(tJuego& juego, int fila, int columna, int lista_pos);
 
 #endif 

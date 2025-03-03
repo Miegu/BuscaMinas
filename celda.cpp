@@ -12,7 +12,7 @@ void inicializarCelda(tCelda& celda) {
 tEstado dame_estado(const tCelda& celda){
     return celda.estado;
 }
-int dame_numero(const tCelda& celda) {
+int celda_dame_numero(const tCelda& celda) {
     return celda.numero;
 }
 bool es_visible(const tCelda& celda) {
@@ -21,10 +21,10 @@ bool es_visible(const tCelda& celda) {
 bool es_mina(const tCelda& celda) {
     return  dame_estado(celda) == MINA;
 }
-bool esta_vacia(const tCelda& celda) {
+bool celda_esta_vacia(const tCelda& celda) {
     return dame_estado(celda) == VACIA;
 }
-bool contiene_numero(const tCelda& celda) {
+bool celda_contiene_numero(const tCelda& celda) {
     return dame_estado(celda) == NUMERO;
 }
 bool esta_marcada(const tCelda& celda) {
@@ -46,5 +46,6 @@ void desmarcar_celda(tCelda& celda) {
     celda.marcada = false;
 }
 void poner_numero(tCelda& celda, int num) {
+    celda.estado = NUMERO;
     celda.numero = num;
 }
