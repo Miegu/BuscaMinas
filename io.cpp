@@ -1,5 +1,6 @@
 #include "io.h"
 #include <iostream>
+#include <string>
 
 //Subprogramas:
 void mostrar_cabecera() {
@@ -16,14 +17,43 @@ void pedir_pos(int& fila, int& columna) { // PREGUNTAR
 }
 
 void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
-    if(esta_com)
-}
-void mostrar_juego_consola(juego) {
+    if (esta_completo(juego)) { // Si ha terminado el juego
+        if (mina_explotada(juego)) {
+            cout << "El jugador a terminado, ya que ha explotado una mina." << endl;
+        }
+        else {
+            cout << "El jugador ha ganado, no ha explotado ninguna mina." << endl;
+        } // Fila y columna -1, se acaba.
 
+    }
 }
-void carga_juego(juego) {
+bool carga_juego(tJuego juego) {
+    bool carga = false;
+    ifstream archivoInput;
+    int posx, posy; // Posiciones de la mina
+    istream& operator>> (istream & in, tJuego & juego);
+    archivoInput.open("buscaminas.txt"); //nombre random
 
+    if (archivoInput.is_open()) {
+        archivoInput >> juego.tablero.nFils;
+        archivoInput >> juego.tablero.nCols;
+        archivoInput >> juego.num_minas;
+        for (int i = 0; i < juego.num_minas; i++) {
+            archivoInput >> posx;
+            archivoInput >> posy;
+            poner_mina(juego.tablero.datos[posx][posy]); // Pone la mina
+        }
+        carga = true;
+
+    }
+    else {
+        cout << "No se pudo abrir el archivo." << endl;
+    }
+    return carga;
 }
+
+
+
 
 //subprogramas privados
 void mostrarCoutSeparadorMat(const tJuego& juego, int huecoCelda);
