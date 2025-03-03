@@ -12,23 +12,23 @@ void inicializar(tJuego &juego, int nfils, int ncols) {
 }
 
 
-int dame_num_jugadas(tJuego juego) { // Nº de Jugadas
+int dame_num_jugadas(const tJuego& juego) { // Nº de Jugadas
 	return juego.num_jugadas;
 }
 
-int dame_num_filas(tJuego juego) { // Nº de Filas
+int dame_num_filas(const tJuego& juego) { // Nº de Filas
 	return num_filas(juego.tablero);
 }
 
-int dame_num_columnas(tJuego juego) { // Nº de Columnas
+int dame_num_columnas(const tJuego& juego) { // Nº de Columnas
 	return num_columnas(juego.tablero);
 }
 
-int dame_num_minas(tJuego juego) { // Nº de Minas
+int dame_num_minas(const tJuego& juego) { // Nº de Minas
 	return juego.num_minas;
 }
 
-bool contiene_mina(tJuego juego, int fila, int columna) { //True si la celda contiene una MINA.
+bool contiene_mina(const tJuego& juego, int fila, int columna) { //True si la celda contiene una MINA.
 	bool contiene = false;
 	if (es_valida(juego.tablero, fila, columna)) {
 		if (es_mina(juego.tablero.datos[fila][columna])) {
@@ -38,7 +38,7 @@ bool contiene_mina(tJuego juego, int fila, int columna) { //True si la celda con
 	return contiene;
 }
 
-bool es_visible(tJuego juego, int fila, int columna) { // !!! La función en celda se llama igual y coge esta en vez de la otra.
+bool es_visible(const tJuego& juego, int fila, int columna) { // !!! La función en celda se llama igual y coge esta en vez de la otra.
 	bool visible = false;
 	if (es_valida(juego.tablero, fila, columna)) {
 		if (celda_es_visible(juego.tablero.datos[fila][columna])) {
@@ -48,7 +48,7 @@ bool es_visible(tJuego juego, int fila, int columna) { // !!! La función en celd
 	return visible;
 }
 
-bool esta_marcada(tJuego juego, int fila, int columna) { // !!! El mismo problema.
+bool esta_marcada(const tJuego& juego, int fila, int columna) { // !!! El mismo problema.
 	bool marcada = false;
 	if (es_valida(juego.tablero, fila, columna)) {
 		if (celda_esta_marcada(juego.tablero.datos[fila][columna])) {
@@ -58,20 +58,20 @@ bool esta_marcada(tJuego juego, int fila, int columna) { // !!! El mismo problem
 	return marcada;
 }
 
-bool esta_vacia(tJuego juego, int fila, int columna) { // x2
+bool esta_vacia(const tJuego& juego, int fila, int columna) { // x2
 	bool vacia = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (esta_vacia(juego.tablero.datos[fila][columna])) {
+		if (celda_esta_vacia(juego.tablero.datos[fila][columna])) {
 			vacia = true;
 		}
 	}
 	return vacia;
 }
 
-bool contiene_numero(tJuego juego, int fila, int columna) { // x3
+bool contiene_numero(const tJuego& juego, int fila, int columna) { // x3
 	bool contiene = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (contiene_numero(juego.tablero.datos[fila][columna])) {
+		if (celda_contiene_numero(juego.tablero.datos[fila][columna])) {
 			contiene = true;
 		}
 	}
@@ -79,15 +79,15 @@ bool contiene_numero(tJuego juego, int fila, int columna) { // x3
 
 }
 
-int dame_numero(tJuego juego, int fila, int columna) {
+int dame_numero(const tJuego& juego, int fila, int columna) {
 	if (es_valida(juego.tablero, fila, columna)) { // True si es válida
-		if (contiene_numero(juego.tablero.datos[fila][columna])) { // True si contiene un nº
-			return dame_numero(juego.tablero.datos[fila][columna]); // Retorna el valor del nº
+		if (contiene_numero(juego, fila, columna)) { // True si contiene un nº
+			return celda_dame_numero(juego.tablero.datos[fila][columna]); // Retorna el valor del nº
 		}
 	}
 }
 
-bool esta_completo(tJuego juego) { 
+bool esta_completo(const tJuego& juego) { 
 	bool completo = true;
 	for (int i = 0; i < juego.tablero.nFils; i++) {
 		for (int j = 0; j < juego.tablero.nCols; j++) {
@@ -101,7 +101,7 @@ bool esta_completo(tJuego juego) {
 	return completo;
 }
 
-bool mina_explotada(tJuego juego) { // Mina explotada
+bool mina_explotada(const tJuego& juego) { // Mina explotada
 	bool explotada = false;
 	if (juego.mina_explotada) {
 		explotada = true;
@@ -109,7 +109,7 @@ bool mina_explotada(tJuego juego) { // Mina explotada
 	return explotada;
 }
 
-esta_terminado(tJuego juego) {
+bool esta_terminado(const tJuego& juego) {
 
 }
 
@@ -142,6 +142,6 @@ void ocultar(tJuego &juego, int fila, int columna) {
 	}
 }
 
-void juega(tJuego juego, int fila, int columna, int lista_pos) {
+void juega(tJuego& juego, int fila, int columna, int lista_pos) {
 
 }
