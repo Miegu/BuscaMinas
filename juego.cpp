@@ -136,6 +136,6 @@ void ocultar(tJuego &juego, int fila, int columna) {
 	}
 }
 
-juega(tJuego juego, int fila, int columna, int lista_pos) {
+void juega(tJuego juego, int fila, int columna, int lista_pos) {
 
 }

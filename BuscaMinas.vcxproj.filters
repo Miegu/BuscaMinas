@@ -56,5 +56,8 @@
     <ClInclude Include="tablero.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="colors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

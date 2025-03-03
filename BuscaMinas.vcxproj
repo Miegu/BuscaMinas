@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="celda.h" />
+    <ClInclude Include="colors.h" />
     <ClInclude Include="io.h" />
     <ClInclude Include="juego.h" />
     <ClInclude Include="listaPosiciones.h" />
