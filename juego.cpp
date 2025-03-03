@@ -8,7 +8,7 @@ void inicializar(tJuego &juego, int nfils, int ncols) {
 	juego.num_minas = 0;
 	juego.tablero.nFils = nfils;
 	juego.tablero.nCols = ncols;
-	inicializar_tablero(juego.tablero); // Inicializa el tablero
+	inicializar_tablero(juego.tablero, nfils, ncols); // Inicializa el tablero
 }
 
 
@@ -41,17 +41,17 @@ bool contiene_mina(tJuego juego, int fila, int columna) { //True si la celda con
 bool es_visible(tJuego juego, int fila, int columna) { // !!! La función en celda se llama igual y coge esta en vez de la otra.
 	bool visible = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (es_visible(juego.tablero.datos[fila][columna])) {
+		if (celda_es_visible(juego.tablero.datos[fila][columna])) {
 			visible = true;
 		}
 	}
-	return viisble;
+	return visible;
 }
 
 bool esta_marcada(tJuego juego, int fila, int columna) { // !!! El mismo problema.
 	bool marcada = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (esta_marcada(juego.tablero.datos[fila][columna]) {
+		if (celda_esta_marcada(juego.tablero.datos[fila][columna])) {
 			marcada = true;
 		}
 	}
@@ -92,7 +92,7 @@ bool esta_completo(tJuego juego) {
 	for (int i = 0; i < juego.tablero.nFils; i++) {
 		for (int j = 0; j < juego.tablero.nCols; j++) {
 			if (!(es_mina(juego.tablero.datos[i][j]))) { // si NO es una mina.
-				if (!es_visible(juego.tablero.datos[i][j])) {
+				if (!celda_es_visible(juego.tablero.datos[i][j])) {
 					completo = false; // Si hay una celda sin descubrir, no esta completo.
 				}
 			}
@@ -113,13 +113,19 @@ esta_terminado(tJuego juego) {
 
 }
 
-poner_mina(tJuego juego, int fila, int columna) {
-
+void poner_mina(tJuego juego, int fila, int columna) {
+	if(es_valida(juego.tablero, fila, columna) && !es_mina(juego.tablero.datos[fila][columna])){
+		int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
+		for (int i = 0; i < 8; i++) {
+			int nFila = fila + 1 * direcciones[i][0];
+			int nCol = columna + 1 * direcciones[i][1];
+			if()
+	}
 }
 
-void marcar_desmarcar(tJuego &juego, int fila, int columna) {
-	if (es_valida(juego.tablero.datos[fila][columna])) { // Mira si es válida
-		if (esta_marcada(juego.tablero.datos[fila][columna].marcada)) { //Si esta marcada, la desmarca
+void marcar_desmarcar(tJuego& juego, int fila, int columna) {
+	if (es_valida(juego.tablero, fila, columna)) { // Mira si es válida
+		if (celda_esta_marcada(juego.tablero.datos[fila][columna])) { //Si esta marcada, la desmarca
 			desmarcar_celda(juego.tablero.datos[fila][columna]);
 		}
 		else {
@@ -129,8 +135,8 @@ void marcar_desmarcar(tJuego &juego, int fila, int columna) {
 }
 
 void ocultar(tJuego &juego, int fila, int columna) {
-	if (es_valida(juego.tablero.datos[fila][columna])) {
-		if (es_visible(juego.tablero.datos[fila][columna])) {
+	if (es_valida(juego.tablero, fila, columna)) {
+		if (celda_es_visible(juego.tablero.datos[fila][columna])) {
 			ocultar_celda(juego.tablero.datos[fila][columna]); // Oculta la celda, si es visible.
 		}
 	}

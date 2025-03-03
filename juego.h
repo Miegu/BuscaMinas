@@ -13,7 +13,6 @@ typedef struct {
 	int num_descubiertas;
 } tJuego;
 
-inicializar(juego);
 inicializar(juego, nfils, ncols);
 dame_num_jugadas(juego);
 dame_num_filas(juego);

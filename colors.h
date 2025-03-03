@@ -36,4 +36,4 @@
 #define BG_LBLUE   "\x1B[48;2;53;149;240m"
 #define BG_LGREEN  "\x1B[48;2;17;245;120m"
 #define BG_GRAY    "\x1B[48;2;176;174;174m"
-#define BG_ROSE    "\x1B[48;2;255;151;203m"#pragma once
+#define BG_ROSE    "\x1B[48;2;255;151;203m"
