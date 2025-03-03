@@ -113,13 +113,21 @@ bool esta_terminado(const tJuego& juego) {
 
 }
 
-void poner_mina(tJuego juego, int fila, int columna) {
+void poner_mina(tJuego& juego, int fila, int columna) {
 	if(es_valida(juego.tablero, fila, columna) && !es_mina(juego.tablero.datos[fila][columna])){
+		poner_mina(juego.tablero.datos[fila][columna]);
 		int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
 		for (int i = 0; i < 8; i++) {
 			int nFila = fila + 1 * direcciones[i][0];
 			int nCol = columna + 1 * direcciones[i][1];
-			if()
+			if (esta_vacia(juego, nFila, nCol)) {
+				poner_numero(juego.tablero.datos[nFila][nCol], 1);
+			}
+			else if (contiene_numero(juego, nFila, nCol)) {
+				int num = dame_numero(juego, nFila, nCol);
+				poner_numero(juego.tablero.datos[nFila][nCol], num + 1);
+			}
+		}
 	}
 }
 
