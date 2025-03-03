@@ -111,7 +111,7 @@ bool mina_explotada(const tJuego& juego) { // Mina explotada
 }
 
 bool esta_terminado(const tJuego& juego) {
-
+	return (mina_explotada(juego) || esta_completo(juego));
 }
 
 void poner_mina(tJuego& juego, int fila, int columna) {
@@ -151,34 +151,38 @@ void ocultar(tJuego &juego, int fila, int columna) {
 	}
 }
 
-void juega(tJuego& juego, int fila, int columna, int lista_pos) {
+void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos) {
     if (es_valida(juego.tablero, fila, columna) && fila < MAX_FILS && columna < MAX_COLS && !celda_es_visible(juego.tablero.datos[fila][columna]) && !celda_esta_marcada(juego.tablero.datos[fila][columna])) {
-    if (fila == -1 && columna == -1) {
-        juego.mina_explotada = true; // El juego termina
-    }
-    else if (fila == -2 && columna == -2) {
-        int fila_marca, columna_marca;
-        cout << "Introduce la fila y columna a marcar: ";
-        cin >> fila_marca >> columna_marca;
-        marcar_desmarcar(juego, fila_marca, columna_marca);
-    }
-    else if (fila == -3 && columna == -3) {
-        
-    }
-    else {
-        if (es_valida(juego.tablero, fila, columna) && !celda_es_visible(juego.tablero.datos[fila][columna]) && !celda_esta_marcada(juego.tablero.datos[fila][columna])) {
-            juego.num_jugadas++;
-            if (es_mina(juego.tablero.datos[fila][columna])) {
-                juego.mina_explotada = true;
-            } else {
-                descubrir_celda(juego.tablero.datos[fila][columna]);
-                juego.num_descubiertas++;
-                if (celda_esta_vacia(juego.tablero.datos[fila][columna])) {
-                    int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
-                    for (int i = 0; i < 8; i++) {
-                        int nFila = fila + direcciones[i][0];
-                        int nCol = columna + direcciones[i][1];
-                        juega(juego, nFila, nCol, lista_pos);
+        if (fila == -1 && columna == -1) {
+            juego.mina_explotada = true; // El juego termina
+        }
+        else if (fila == -2 && columna == -2) {
+            int fila_marca, columna_marca;
+            cout << "Introduce la fila y columna a marcar: ";
+            cin >> fila_marca >> columna_marca;
+            marcar_desmarcar(juego, fila_marca, columna_marca);
+        }
+        else if (fila == -3 && columna == -3) {
+			//no lo sé
+        }
+        else {
+            if (es_valida(juego.tablero, fila, columna) && !celda_es_visible(juego.tablero.datos[fila][columna]) && !celda_esta_marcada(juego.tablero.datos[fila][columna])) {
+                juego.num_jugadas++;
+                if (es_mina(juego.tablero.datos[fila][columna])) {
+                    juego.mina_explotada = true;
+                }
+                else {
+                    descubrir_celda(juego.tablero.datos[fila][columna]);
+                    juego.num_descubiertas++;
+                    if (celda_esta_vacia(juego.tablero.datos[fila][columna])) {
+                        int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
+                        for (int i = 0; i < 8; i++) {
+                            int nFila = fila + direcciones[i][0];
+                            int nCol = columna + direcciones[i][1];
+                            if (nFila >= 0 && nFila < MAX_FILS && nCol >= 0 && nCol < MAX_COLS) {
+                                juega(juego, nFila, nCol, lista_pos);
+                            }
+                        }
                     }
                 }
             }

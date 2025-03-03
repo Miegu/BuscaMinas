@@ -32,7 +32,7 @@ bool carga_juego(tJuego& juego) {
     ifstream archivoInput;
     int posx, posy; // Posiciones de la mina
     istream& operator>> (istream & in, tJuego & juego);
-    archivoInput.open("buscaminas.txt"); //nombre random
+    archivoInput.open("test1.txt"); //nombre random
 
     if (archivoInput.is_open()) {
         archivoInput >> juego.tablero.nFils;
