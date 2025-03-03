@@ -27,7 +27,7 @@ void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
 
     }
 }
-bool carga_juego(tJuego juego) {
+bool carga_juego(tJuego& juego) {
     bool carga = false;
     ifstream archivoInput;
     int posx, posy; // Posiciones de la mina
@@ -49,6 +49,8 @@ bool carga_juego(tJuego juego) {
     else {
         cout << "No se pudo abrir el archivo." << endl;
     }
+
+    archivoInput.close();
     return carga;
 }
 
