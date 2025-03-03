@@ -1,6 +1,29 @@
 #include "io.h"
 #include <iostream>
 
+//Subprogramas:
+void mostrar_cabecera() {
+    cout << "Buscaminas" << endl;
+    cout << "----------" << endl;
+}
+
+void pedir_pos(int& fila, int& columna) { // PREGUNTAR
+    cout << "Introduce una fila: ";
+    cin >> fila;
+    cout << endl;
+    cout << "Introduce una columna: ";
+    cin >> columna;
+}
+
+void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
+    if(esta_com)
+}
+void mostrar_juego_consola(juego) {
+
+}
+void carga_juego(juego) {
+
+}
 
 //subprogramas privados
 void mostrarCoutSeparadorMat(const tJuego& juego, int huecoCelda);
