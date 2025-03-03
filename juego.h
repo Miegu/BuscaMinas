@@ -32,4 +32,5 @@ void marcar_desmarcar(tJuego& juego, int fila, int columna);
 void ocultar(tJuego& juego, int fila, int columna);
 void juega(tJuego& juego, int fila, int columna, int lista_pos);
 
+
 #endif 

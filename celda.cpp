@@ -15,7 +15,7 @@ tEstado dame_estado(const tCelda& celda){
 int celda_dame_numero(const tCelda& celda) {
     return celda.numero;
 }
-bool es_visible(const tCelda& celda) {
+bool celda_es_visible(const tCelda& celda) {
     return celda.visible;
 }
 bool es_mina(const tCelda& celda) {
@@ -27,7 +27,7 @@ bool celda_esta_vacia(const tCelda& celda) {
 bool celda_contiene_numero(const tCelda& celda) {
     return dame_estado(celda) == NUMERO;
 }
-bool esta_marcada(const tCelda& celda) {
+bool celda_esta_marcada(const tCelda& celda) {
     return celda.marcada;
 }
 void descubrir_celda(tCelda& celda) {

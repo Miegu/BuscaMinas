@@ -14,8 +14,10 @@ const char CHAR_MINA = '*';     // Mina
 
 
 void mostrar_cabecera();
-void mostrar_juego_consola(const tJuego& juego);
-bool carga_juego(tJuego& juego);
+void pedir_pos(int fila, int columna);
+void mostrar_resultado(juego);
+void mostrar_juego_consola(juego);
+void carga_juego(juego);
 
 #endif 
 
