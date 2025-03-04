@@ -18,8 +18,7 @@ int main() {
         do {
             mostrar_cabecera();
             mostrar_juego_consola(juego);
-            cout << "Introduce fila y columna: ";
-            cin >> fila >> columna;
+            pedir_pos(fila, columna);
             juega(juego, fila, columna, lista_pos);
         } while (!esta_terminado(juego) && !(fila == -1 && columna == -1));
     } else {

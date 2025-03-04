@@ -114,7 +114,7 @@ bool esta_terminado(const tJuego& juego) {
 	return (mina_explotada(juego) || esta_completo(juego));
 }
 
-void poner_mina(tJuego& juego, int fila, int columna) {
+void poner_mina_juego(tJuego& juego, int fila, int columna) {
 	if(es_valida(juego.tablero, fila, columna) && !es_mina(juego.tablero.datos[fila][columna])){
 		poner_mina(juego.tablero.datos[fila][columna]);
 		int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };

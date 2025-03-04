@@ -11,11 +11,11 @@ typedef struct {
 } tTablero;
 
 
-void inicializar_tablero(tTablero tablero, int nfils, int ncols);
-int num_filas(tTablero tablero);
-int num_columnas(tTablero tab);
-void dame_celda(tTablero tablero, int fila, int columna);
-bool es_valida(tTablero tablero, int fila, int columna);
+void inicializar_tablero(tTablero& tablero, int fils, int cols);
+int num_filas(const tTablero& tablero);
+int num_columnas(const tTablero& tab);
+tCelda& dame_celda(tTablero& tablero, int fila, int columna);
+bool es_valida(const tTablero& tablero, int fila, int columna);
 void poner_celda(tTablero& tablero, int fila, int columna, tCelda celda);
 
 #endif

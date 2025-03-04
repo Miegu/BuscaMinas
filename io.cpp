@@ -1,6 +1,7 @@
 #include "io.h"
 #include <iostream>
 #include <string>
+using namespace std;
 
 //Subprogramas:
 void mostrar_cabecera() {
@@ -8,7 +9,7 @@ void mostrar_cabecera() {
     cout << "----------" << endl;
 }
 
-void pedir_pos(int& fila, int& columna) { // PREGUNTAR
+void pedir_pos(int& fila, int& columna) { // Definir las variables donde se llame a la función
     cout << "Introduce una fila: ";
     cin >> fila;
     cout << endl;
@@ -27,21 +28,22 @@ void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
 
     }
 }
-bool carga_juego(tJuego& juego) {
+bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     bool carga = false;
-    ifstream archivoInput;
+    ifstream archivoInput(nombreArchivo);
     int posx, posy; // Posiciones de la mina
     istream& operator>> (istream & in, tJuego & juego);
-    archivoInput.open("test1.txt"); //nombre random
 
     if (archivoInput.is_open()) {
-        archivoInput >> juego.tablero.nFils;
-        archivoInput >> juego.tablero.nCols;
-        archivoInput >> juego.num_minas;
-        for (int i = 0; i < juego.num_minas; i++) {
-            archivoInput >> posx;
-            archivoInput >> posy;
-            poner_mina(juego.tablero.datos[posx][posy]); // Pone la mina
+        int fils, cols, minas;
+        archivoInput >> fils >> cols >> minas;
+        inicializar_tablero(juego.tablero, fils, cols);
+        juego.num_minas = minas;
+        for (int i = 0; i < minas; i++) {
+            archivoInput >> posx >> posy;
+            if (es_valida(juego.tablero, posx, posy)) {
+                poner_mina_juego(juego, posx, posy);
+            } // Pone la mina
         }
         carga = true;
 
