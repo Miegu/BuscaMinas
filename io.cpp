@@ -28,6 +28,7 @@ void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
 
     }
 }
+
 bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     bool carga = false;
     ifstream archivoInput(nombreArchivo);
@@ -37,7 +38,7 @@ bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     if (archivoInput.is_open()) {
         int fils, cols, minas;
         archivoInput >> fils >> cols >> minas;
-        inicializar_tablero(juego.tablero, fils, cols);
+        inicializar(juego, fils, cols);
         juego.num_minas = minas;
         for (int i = 0; i < minas; i++) {
             archivoInput >> posx >> posy;
