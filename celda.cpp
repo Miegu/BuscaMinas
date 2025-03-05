@@ -13,6 +13,7 @@ tEstado dame_estado(const tCelda& celda){
     return celda.estado;
 }
 int celda_dame_numero(const tCelda& celda) {
+    if(celda.estado == NUMERO)
     return celda.numero;
 }
 bool celda_es_visible(const tCelda& celda) {
@@ -38,6 +39,7 @@ void ocultar_celda(tCelda& celda) {
 }
 void poner_mina(tCelda& celda) {
     celda.estado = MINA;
+    celda.numero = 0;
 }
 void marcar_celda(tCelda& celda) {
     celda.marcada = true;

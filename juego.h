@@ -2,7 +2,6 @@
 #define JUEGO_H
 
 #include "tablero.h"
-#include "listaUndo.h"
 #include "listaPosiciones.h"
 
 typedef struct {
@@ -30,6 +29,7 @@ bool esta_terminado(const tJuego& juego);
 void poner_mina_juego(tJuego& juego, int fila, int columna);
 void marcar_desmarcar(tJuego& juego, int fila, int columna);
 void ocultar(tJuego& juego, int fila, int columna);
+void descubrir_celdas(tJuego& juego, int fila, int columna);
 void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos);
 
 
