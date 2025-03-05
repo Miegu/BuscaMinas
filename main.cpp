@@ -24,7 +24,6 @@ int main() {
             mostrar_juego_consola(juego);
             pedir_pos(fila, columna);
             juega(juego, fila, columna, lista_pos);
-            juego.num_jugadas++;
         } while (!esta_terminado(juego) && !(fila == -1 && columna == -1));
     } else {
         cout << "Error al cargar el juego." << endl;

@@ -101,14 +101,17 @@ bool esta_completo(const tJuego& juego) {
 	}
 	return completo;
 }
+void explotar_mina(tJuego & juego, int fila, int columna) {
+	tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (es_mina(celda) && es_visible(juego, fila, columna)) {
+				juego.mina_explotada = true;
+				juego.num_descubiertas++; // Actualizar contador
+			}
+		}
 
-bool mina_explotada(const tJuego& juego) { // Mina explotada
-	bool explotada = false;
-	if (juego.mina_explotada) {
-		explotada = true;
+bool mina_explotada(const tJuego & juego) {
+		return juego.mina_explotada;
 	}
-	return explotada;
-}
 
 bool esta_terminado(const tJuego& juego) {
 	return (mina_explotada(juego) || esta_completo(juego));
@@ -155,23 +158,22 @@ void descubrir_celdas(tJuego& juego, int fila, int columna) {
 	for (int i = 0; i < 8; i++) {
 		int nFila = fila + 1 * direcciones[i][0];
 		int nCol = columna + 1 * direcciones[i][1];
-		tCelda celda = juego.tablero.datos[nFila][nCol];
+		tCelda& celda = juego.tablero.datos[nFila][nCol];
 		if (!esta_marcada(juego, nFila, nCol)) {
 			descubrir_celda(celda);
 		}
 	}
 }
 void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos) {
-
-		if (es_valida(juego.tablero, fila, columna) && !es_visible(juego, fila, columna) && esta_marcada(juego, fila, columna)) {
-			tCelda celda = juego.tablero.datos[fila][columna];
-			descubrir_celda(celda);
+		if (es_valida(juego.tablero, fila, columna) && !es_visible(juego, fila, columna) && !esta_marcada(juego, fila, columna)) {
+			descubrir_celda(juego.tablero.datos[fila][columna]);
 			if (contiene_mina(juego, fila, columna)) {
-				mina_explotada(juego);
+				explotar_mina(juego, fila, columna);
 			}
-			else if (dame_numero == 0){
+			else if (dame_numero(juego, fila, columna) == 0) {
 				descubrir_celdas(juego, fila, columna);
 			}
+			juego.num_jugadas++;
 		}
 
 

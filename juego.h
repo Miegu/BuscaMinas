@@ -30,6 +30,7 @@ void poner_mina_juego(tJuego& juego, int fila, int columna);
 void marcar_desmarcar(tJuego& juego, int fila, int columna);
 void ocultar(tJuego& juego, int fila, int columna);
 void descubrir_celdas(tJuego& juego, int fila, int columna);
+void explotar_mina(tJuego& juego, int fila, int columna);
 void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos);
 
 
