@@ -25,6 +25,16 @@ int main() {
             pedir_pos(fila, columna);
             juega(juego, fila, columna, lista_pos);
         } while (!esta_terminado(juego) && !(fila == -1 && columna == -1));
+        if (esta_terminado(juego)) { // Una vez finaliza el juego, determina si ha ganado el jugador o a perdido.
+            mostrar_cabecera();
+            mostrar_juego_consola(juego);
+            if (juego.mina_explotada) {
+                cout << "La mina ha sido explotada, ha perdido.";
+            }
+            else {
+                cout << "Ha ganado, la mina no ha sido explotada.";
+            }
+        }
     } else {
         cout << "Error al cargar el juego." << endl;
     }
