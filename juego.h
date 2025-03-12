@@ -3,6 +3,14 @@
 
 #include "tablero.h"
 #include "listaPosiciones.h"
+#include "listaUndo.h"
+
+typedef enum {
+	ACTIVO,
+	PERDIDO,
+	GANADO,
+	ABANDONADO
+} EstadoJuego;
 
 typedef struct {
 	tTablero tablero;
@@ -10,7 +18,11 @@ typedef struct {
 	bool mina_explotada;
 	int num_minas;
 	int num_descubiertas;
+	EstadoJuego estado;
 } tJuego;
+
+
+
 
 void inicializar(tJuego& juego, int nfils, int ncols);
 int dame_num_jugadas(const tJuego& juego);
@@ -29,9 +41,10 @@ bool esta_terminado(const tJuego& juego);
 void poner_mina_juego(tJuego& juego, int fila, int columna);
 void marcar_desmarcar(tJuego& juego, int fila, int columna);
 void ocultar(tJuego& juego, int fila, int columna);
-void descubrir_celdas(tJuego& juego, int fila, int columna);
+void descubrir_celdas(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos);
 void explotar_mina(tJuego& juego, int fila, int columna);
-void juega(tJuego& juego, int fila, int columna, tListaPosiciones& lista_pos);
-
+void ocultar_juego(tJuego& juego, int fila, int col);
+void aplicar_undo(tJuego& juego, tListaUndo& listaUndo);
+EstadoJuego juega(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
 
 #endif 
