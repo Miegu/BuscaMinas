@@ -9,6 +9,7 @@ void inicializar(tJuego &juego, int nfils, int ncols) {
 	juego.num_minas = 0;
 	juego.tablero.nFils = nfils;
 	juego.tablero.nCols = ncols;
+	juego.estado = ACTIVO;
 	inicializar_tablero(juego.tablero, nfils, ncols); // Inicializa el tablero
 }
 
@@ -32,7 +33,8 @@ int dame_num_minas(const tJuego& juego) { // Nº de Minas
 bool contiene_mina(const tJuego& juego, int fila, int columna) { //True si la celda contiene una MINA.
 	bool contiene = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (es_mina(juego.tablero.datos[fila][columna])) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (es_mina(celda)) {
 			contiene = true;
 		}
 	}
@@ -42,7 +44,8 @@ bool contiene_mina(const tJuego& juego, int fila, int columna) { //True si la ce
 bool es_visible(const tJuego& juego, int fila, int columna) { // !!! La función en celda se llama igual y coge esta en vez de la otra.
 	bool visible = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (celda_es_visible(juego.tablero.datos[fila][columna])) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (celda_es_visible(celda)) {
 			visible = true;
 		}
 	}
@@ -52,7 +55,8 @@ bool es_visible(const tJuego& juego, int fila, int columna) { // !!! La función 
 bool esta_marcada(const tJuego& juego, int fila, int columna) { // !!! El mismo problema.
 	bool marcada = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (celda_esta_marcada(juego.tablero.datos[fila][columna])) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (celda_esta_marcada(celda)) {
 			marcada = true;
 		}
 	}
@@ -62,7 +66,8 @@ bool esta_marcada(const tJuego& juego, int fila, int columna) { // !!! El mismo 
 bool esta_vacia(const tJuego& juego, int fila, int columna) { // x2
 	bool vacia = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (celda_esta_vacia(juego.tablero.datos[fila][columna])) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (celda_esta_vacia(celda)) {
 			vacia = true;
 		}
 	}
@@ -72,7 +77,8 @@ bool esta_vacia(const tJuego& juego, int fila, int columna) { // x2
 bool contiene_numero(const tJuego& juego, int fila, int columna) { // x3
 	bool contiene = false;
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (celda_contiene_numero(juego.tablero.datos[fila][columna])) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (celda_contiene_numero(celda)) {
 			contiene = true;
 		}
 	}
@@ -83,7 +89,8 @@ bool contiene_numero(const tJuego& juego, int fila, int columna) { // x3
 int dame_numero(const tJuego& juego, int fila, int columna) {
 	if (es_valida(juego.tablero, fila, columna)) { // True si es válida
 		if (contiene_numero(juego, fila, columna)) { // True si contiene un nº
-			return celda_dame_numero(juego.tablero.datos[fila][columna]); // Retorna el valor del nº
+			tCelda celda = dame_celda(juego.tablero, fila, columna);
+			return celda_dame_numero(celda); // Retorna el valor del nº
 		}
 	}
 }
@@ -92,8 +99,9 @@ bool esta_completo(const tJuego& juego) {
 	bool completo = true;
 	for (int i = 0; i < juego.tablero.nFils; i++) {
 		for (int j = 0; j < juego.tablero.nCols; j++) {
-			if (!(es_mina(juego.tablero.datos[i][j]))) { // si NO es una mina.
-				if (!celda_es_visible(juego.tablero.datos[i][j])) {
+			tCelda celda = dame_celda(juego.tablero, i, j);
+			if (!(es_mina(celda))) { // si NO es una mina.
+				if (!celda_es_visible(celda)) {
 					completo = false; // Si hay una celda sin descubrir, no esta completo.
 				}
 			}
@@ -101,7 +109,7 @@ bool esta_completo(const tJuego& juego) {
 	}
 	return completo;
 }
-void explotar_mina(tJuego & juego, int fila, int columna) {
+void explotar_mina(tJuego& juego, int fila, int columna) {
 	tCelda celda = dame_celda(juego.tablero, fila, columna);
 		if (es_mina(celda) && es_visible(juego, fila, columna)) {
 				juego.mina_explotada = true;
@@ -118,18 +126,28 @@ bool esta_terminado(const tJuego& juego) {
 }
 
 void poner_mina_juego(tJuego& juego, int fila, int columna) {
-	if(es_valida(juego.tablero, fila, columna) && !es_mina(juego.tablero.datos[fila][columna])){
-		poner_mina(juego.tablero.datos[fila][columna]);
-		int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
-		for (int i = 0; i < 8; i++) {
-			int nFila = fila + 1 * direcciones[i][0];
-			int nCol = columna + 1 * direcciones[i][1];
-			if (esta_vacia(juego, nFila, nCol)) {
-				poner_numero(juego.tablero.datos[nFila][nCol], 1);
-			}
-			else if (contiene_numero(juego, nFila, nCol)) {
-				int num = dame_numero(juego, nFila, nCol);
-				poner_numero(juego.tablero.datos[nFila][nCol], num + 1);
+	if (es_valida(juego.tablero, fila, columna)) {
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
+		if (!es_mina(celda)) {
+			poner_mina(celda);
+			poner_celda(juego.tablero, fila, columna, celda);
+
+			int direcciones[8][2] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
+
+			for (int i = 0; i < 8; i++) {
+				int nFila = fila + direcciones[i][0];
+				int nCol = columna + direcciones[i][1];
+				if (es_valida(juego.tablero, nFila, nCol)) {
+					tCelda nCelda = dame_celda(juego.tablero, nFila, nCol);
+					if (esta_vacia(juego, nFila, nCol)) {
+						poner_numero(nCelda, 1);
+					}
+					else if (contiene_numero(juego, nFila, nCol)) {
+						int num = dame_numero(juego, nFila, nCol);
+						poner_numero(nCelda, num + 1);
+					}
+					poner_celda(juego.tablero, nFila, nCol, nCelda);
+				}
 			}
 		}
 	}
@@ -137,21 +155,24 @@ void poner_mina_juego(tJuego& juego, int fila, int columna) {
 
 void marcar_desmarcar(tJuego& juego, int fila, int columna) {
 	if (es_valida(juego.tablero, fila, columna) && !es_visible(juego, fila, columna)) {
-		tCelda& celda = juego.tablero.datos[fila][columna];
+		tCelda celda = dame_celda(juego.tablero, fila, columna);
 		if (celda_esta_marcada(celda)) {
 			desmarcar_celda(celda);
 		}
 		else {
 			marcar_celda(celda);
 		}
+		poner_celda(juego.tablero, fila, columna, celda);
 	}
 }
 
 
 void ocultar(tJuego &juego, int fila, int columna) {
+	tCelda celda = dame_celda(juego.tablero, fila, columna);
 	if (es_valida(juego.tablero, fila, columna)) {
-		if (celda_es_visible(juego.tablero.datos[fila][columna])) {
-			ocultar_celda(juego.tablero.datos[fila][columna]); // Oculta la celda, si es visible.
+		if (celda_es_visible(celda)) {
+			ocultar_celda(celda); // Oculta la celda, si es visible.
+			poner_celda(juego.tablero, fila, columna, celda);
 		}
 	}
 }
@@ -165,8 +186,9 @@ void descubrir_celdas(tJuego& juego, int fila, int columna, tListaPosiciones& li
 		if (es_valida(juego.tablero, nFila, nCol) &&
 			!es_visible(juego, nFila, nCol) &&
 			!esta_marcada(juego, nFila, nCol)) {
-
-			descubrir_celda(juego.tablero.datos[nFila][nCol]);
+			tCelda celda = dame_celda(juego.tablero, nFila, nCol);
+			descubrir_celda(celda);
+			poner_celda(juego.tablero, nFila, nCol, celda);
 			insertar_final(lista_pos, nFila, nCol);
 			juego.num_descubiertas++;
 		}
@@ -176,8 +198,9 @@ void descubrir_celdas(tJuego& juego, int fila, int columna, tListaPosiciones& li
 
 void ocultar_juego(tJuego& juego, int fila, int col) {
 	if (es_valida(juego.tablero, fila, col)) {
-		tCelda& celda = dame_celda(juego.tablero, fila, col);
+		tCelda celda = dame_celda(juego.tablero, fila, col);
 		ocultar_celda(celda);  // Del módulo celda
+		poner_celda(juego.tablero, fila, col, celda);
 		juego.num_descubiertas--;
 	}
 }
@@ -193,8 +216,9 @@ EstadoJuego juega(tJuego& juego, int fila, int col, tListaUndo& listaUndo) {
 		esta_marcada(juego, fila, col)) {
 		return juego.estado;
 	}
-
-	descubrir_celda(juego.tablero.datos[fila][col]);
+	tCelda celda = dame_celda(juego.tablero, fila, col);
+	descubrir_celda(celda);
+	poner_celda(juego.tablero, fila, col, celda);
 	insertar_final(listaPos, fila, col);
 	juego.num_descubiertas++;
 	juego.num_jugadas++;
@@ -224,7 +248,9 @@ void aplicar_undo(tJuego& juego, tListaUndo& listaUndo) {
 			int fila = dame_posX(ultimoMov, i);
 			int col = dame_posY(ultimoMov, i);
 			if (es_valida(juego.tablero, fila, col)) {
-				ocultar_celda(juego.tablero.datos[fila][col]);
+				tCelda celda = dame_celda(juego.tablero, fila, col);
+				ocultar_celda(celda);
+				poner_celda(juego.tablero, fila, col, celda);
 				juego.num_descubiertas--;
 			}
 		}

@@ -14,6 +14,7 @@ int main() {
     cout << "Introduce el nombre del archivo: ";
     getline(cin, nombreArchivo);
     nombreArchivo += ".txt";
+    cout << nombreArchivo;
     if (carga_juego(juego, nombreArchivo)) {
         inicializar_listaUndo(listaUndo);
         bool salir = false;
@@ -73,6 +74,6 @@ int main() {
     else {
         cout << "Error al cargar el juego." << endl;
     }
-
+   
     return 0;
 }

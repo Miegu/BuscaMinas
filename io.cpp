@@ -31,9 +31,9 @@ void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
 
 bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     bool carga = false;
+  
     ifstream archivoInput(nombreArchivo);
     int posx, posy; // Posiciones de la mina
-    istream& operator>> (istream & in, tJuego & juego);
 
     if (archivoInput.is_open()) {
         int fils, cols, minas;

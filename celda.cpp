@@ -1,5 +1,4 @@
 #include "celda.h"
-//hola
 #include <iostream>
 
 void inicializarCelda(tCelda& celda) {

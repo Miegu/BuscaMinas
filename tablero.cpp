@@ -21,7 +21,7 @@ bool es_valida(const tTablero& tablero, int fila, int columna) { // Para ver si 
 	return valida;
 }
 
-tCelda& dame_celda(tTablero& tablero, int fila, int columna) {
+tCelda dame_celda(const tTablero& tablero, int fila, int columna) {
 	if (es_valida(tablero, fila, columna)) {
 		return tablero.datos[fila][columna]; // Si es válida (true), retorna la celda
 	}
