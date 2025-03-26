@@ -273,7 +273,7 @@ bool controlOperaciones(tJuego &juego, int fila, int columna, tListaUndo &listaU
 		cout << "Introduce la columna a desmarcar: " << endl;
 		cin >> y;
 		if (es_valida(juego.tablero, x, y)) {
-			marcar_desmarcar(juego, x, columna);
+			marcar_desmarcar(juego, x, y);
 		}
 		else {
 			cout << "Fila y columna inválidas." << endl;
