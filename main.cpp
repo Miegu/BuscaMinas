@@ -24,31 +24,18 @@ int main() {
             tListaPosiciones listaPos;
             inicializar_listaPosiciones(listaPos);
             int fila, columna;
-            pedir_pos(fila, columna); // Función del módulo inputOutput
+            //Pide la fila y columna.
+            cout << "Introduce una fila: " << endl;
+            cin >> fila;
+            cout << "Introduce una columna: " << endl;
+            cin >> columna;
 
-            // Control de operaciones especiales en main
-            if (fila == -1 && columna == -1) {
+            if (controlOperaciones(juego, fila, columna, listaUndo)) { // Si decide salir del juego.
                 salir = true;
-                cout << "Partida abandonada\n";
             }
-            else if (fila == -2 && columna == -2) {
-                // Lógica de marcado/desmarcado
-                int x, y;
-                pedir_pos(x, y);
-                if (es_valida(juego.tablero, x, y)) {
-                    marcar_desmarcar(juego, x, y);
-                }
-            }
-            else if (fila == -3 && columna == -3) {
-                // Operación undo
-                if (longitud_listaUndo(listaUndo) > 0) {
-                    aplicar_undo(juego, listaUndo);
-                    juego.estado = ACTIVO;
-                }
-            }
-            else {
+            else { // Si no decide.
                 // Jugada normal
-                EstadoJuego estado = juega(juego, fila, columna, listaUndo);
+                EstadoJuego estado = juega(juego, fila, columna, listaUndo); // ESTA FUNCIÓN NO SE PUEDE METER EN JUEGO.CPP, porque usa funciones de io.h,y no esta incluida.
                 if (estado == PERDIDO || estado == GANADO) {
                     mostrar_juego_consola(juego);
                     mostrar_resultado(juego);

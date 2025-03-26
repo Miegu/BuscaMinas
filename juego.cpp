@@ -260,4 +260,33 @@ void aplicar_undo(tJuego& juego, tListaUndo& listaUndo) {
 	}
 }
 
+bool controlOperaciones(tJuego &juego, int fila, int columna, tListaUndo &listaUndo) {
+	bool salir = false;
+	if (fila == -1 && columna == -1) {
+		salir = true;
+		cout << "Partida abandonada." << endl;
+	}
+	else if (fila == -2 && columna == -2) {
+		int x, y;
+		cout << "Introduce la fila a desmarcar: " << endl;
+		cin >> x;
+		cout << "Introduce la columna a desmarcar: " << endl;
+		cin >> y;
+		if (es_valida(juego.tablero, x, y)) {
+			marcar_desmarcar(juego, x, columna);
+		}
+		else {
+			cout << "Fila y columna inválidas." << endl;
+		}
+	}
+	else if (fila == -3 && columna == -3) {
+		if (longitud_listaUndo(listaUndo) > 0) {
+			aplicar_undo(juego, listaUndo);
+			juego.estado = ACTIVO;
+		}
+	}
+
+	return salir;
+}
+
 

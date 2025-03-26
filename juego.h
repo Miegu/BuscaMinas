@@ -46,5 +46,5 @@ void explotar_mina(tJuego& juego, int fila, int columna);
 void ocultar_juego(tJuego& juego, int fila, int col);
 void aplicar_undo(tJuego& juego, tListaUndo& listaUndo);
 EstadoJuego juega(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
-
+bool controlOperaciones(tJuego& juego, int fila, int columna, tListaUndo& listaUndo);
 #endif 
