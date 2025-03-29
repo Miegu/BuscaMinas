@@ -25,10 +25,7 @@ int main() {
             inicializar_listaPosiciones(listaPos);
             int fila, columna;
             //Pide la fila y columna.
-            cout << "Introduce una fila: " << endl;
-            cin >> fila;
-            cout << "Introduce una columna: " << endl;
-            cin >> columna;
+            pedir_pos(fila, columna);
 
             if (controlOperaciones(juego, fila, columna, listaUndo)) { // Si decide salir del juego.
                 salir = true;
