@@ -109,11 +109,11 @@ bool esta_completo(const tJuego& juego) {
 	}
 	return completo;
 }
-void explotar_mina(tJuego& juego, int fila, int columna) {
-	tCelda celda = dame_celda(juego.tablero, fila, columna);
+void explotar_mina(tJuego& juego, int fila, int columna) { // Hace explotar la mina
+	tCelda& celda = juego.tablero.datos[fila][columna];
 		if (es_mina(celda) && es_visible(juego, fila, columna)) {
 				juego.mina_explotada = true;
-				juego.num_descubiertas++; // Actualizar contador
+				juego.estado = PERDIDO; 
 			}
 		}
 
@@ -224,8 +224,7 @@ EstadoJuego juega(tJuego& juego, int fila, int col, tListaUndo& listaUndo) {
 	juego.num_jugadas++;
 
 	if (contiene_mina(juego, fila, col)) {
-		juego.mina_explotada = true;
-		juego.estado = PERDIDO;
+		explotar_mina(juego, fila, col);
 	}
 	else if (esta_vacia(juego, fila, col)) {
 		descubrir_celdas(juego, fila, col, listaPos);

@@ -18,14 +18,14 @@ void pedir_pos(int& fila, int& columna) { // Definir las variables donde se llam
 }
 
 void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
-    if (esta_completo(juego)) { // Si ha terminado el juego
-        if (mina_explotada(juego)) {
-            cout << "El jugador a terminado, ya que ha explotado una mina." << endl;
-        }
-        else {
+    if (esta_completo(juego) || mina_explotada(juego)) { // Solo muestra el resultado y el tablero, solo si el juego esta completo o la mina ha sido explotada.
+        mostrar_juego_consola(juego);
+        if (esta_completo(juego)) { // Si ha terminado el juego
             cout << "El jugador ha ganado, no ha explotado ninguna mina." << endl;
-        } // Fila y columna -1, se acaba.
-
+        }
+        else if (mina_explotada(juego)) {
+            cout << "El jugador ha perdido, la mina ha sido explotada." << endl;
+        }
     }
 }
 

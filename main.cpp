@@ -33,27 +33,11 @@ int main() {
             else { // Si no decide.
                 // Jugada normal
                 EstadoJuego estado = juega(juego, fila, columna, listaUndo); // ESTA FUNCIÓN NO SE PUEDE METER EN JUEGO.CPP, porque usa funciones de io.h,y no esta incluida.
-                if (estado == PERDIDO || estado == GANADO) {
-                    mostrar_juego_consola(juego);
-                    mostrar_resultado(juego);
-                    cout << "Seguir Jugando? S/N " << endl;
-                    char c;
-                    cin >> c;
-                    if (c == 'n') {
-                        salir = true;
-                    }
-                    else if (c == 's') {
-                        juego.estado = ACTIVO;
-                        cout << "Nueva Partida: " << endl;
-                        inicializar_listaUndo(listaUndo); // Reiniciar histórico
-                        carga_juego(juego, nombreArchivo); // Recargar tablero
-                        salir = false; // Restablecer estado
-                    }
-
-
-                }
             }
+
+            mostrar_resultado(juego); // Muestra el resultado una vez acabada la partida.
         } while (!salir && !esta_terminado(juego));
+
     }
     else {
         cout << "Error al cargar el juego." << endl;
