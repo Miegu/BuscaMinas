@@ -1,37 +1,49 @@
 #include "io.h"
 #include <iostream>
-#include <string>
+
 using namespace std;
 
-//Subprogramas:
+
 void mostrar_cabecera() {
     cout << "Buscaminas" << endl;
     cout << "----------" << endl;
+    cout << "Instrucciones:" << endl;
+    cout << "- Introduce las coordenadas para descubrir una celda." << endl;
+    cout << "- Usa -1 -1 para abandonar la partida." << endl;
+    cout << "- Usa -2 -2 para marcar/desmarcar una celda." << endl;
+    cout << "- Usa -3 -3 para deshacer una jugada." << endl;
 }
 
-void pedir_pos(int& fila, int& columna) { // Definir las variables donde se llame a la función
+void pedir_pos(int& fila, int& columna) {
     cout << "Introduce una fila: ";
-    cin >> fila;
+    while (!(cin >> fila)) {
+        cout << "Entrada invalida. Introduce un numero: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
+    cout << "\nIntroduce una columna: ";
+    while (!(cin >> columna)) {
+        cout << "Entrada invalida. Introduce un numero: ";
+        cin.clear();
+        cin.ignore(10000, '\n');
+    }
     cout << endl;
-    cout << "Introduce una columna: ";
-    cin >> columna;
 }
 
-void mostrar_resultado(tJuego juego) { // Muestra el resultado final del juego.
-    if (esta_completo(juego) || mina_explotada(juego)) { // Solo muestra el resultado y el tablero, solo si el juego esta completo o la mina ha sido explotada.
-        mostrar_juego_consola(juego);
-        if (esta_completo(juego)) { // Si ha terminado el juego
-            cout << "El jugador ha ganado, no ha explotado ninguna mina." << endl;
-        }
-        else if (mina_explotada(juego)) {
-            cout << "El jugador ha perdido, la mina ha sido explotada." << endl;
-        }
+void mostrar_resultado(tJuego juego) {
+    mostrar_juego_consola(juego);
+    if (mina_explotada(juego)) {
+        cout << "La mina a explotado, has perdido :c " << endl;
+    }
+    else {
+        cout << "Has ganado! No ha explotado ninguna mina." << endl;
     }
 }
 
+
 bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     bool carga = false;
-  
+
     ifstream archivoInput(nombreArchivo);
     int posx, posy; // Posiciones de la mina
 
@@ -47,7 +59,6 @@ bool carga_juego(tJuego& juego, const string& nombreArchivo) {
             } // Pone la mina
         }
         carga = true;
-
     }
     else {
         cout << "No se pudo abrir el archivo." << endl;
