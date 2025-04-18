@@ -1,3 +1,7 @@
+// Nicole Vergara
+// Seyam Acuba
+
+
 #include "io.h"
 #include "juego.h"
 #include "listaUndo.h"

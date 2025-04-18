@@ -45,6 +45,6 @@ void descubrir_celdas(tJuego& juego, int fila, int columna, tListaPosiciones& li
 void explotar_mina(tJuego& juego, int fila, int columna);
 void ocultar_juego(tJuego& juego, int fila, int col);
 void aplicar_undo(tJuego& juego, tListaUndo& listaUndo);
-EstadoJuego juega(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
-bool controlOperaciones(tJuego& juego, int fila, int columna, tListaUndo& listaUndo);
+EstadoJuego estadoJuego(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
+void jugar(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
 #endif 
