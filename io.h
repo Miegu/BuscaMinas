@@ -3,6 +3,7 @@
 
 #include "juego.h"
 #include "colors.h"
+#include "listaJuegos.h"
 #include <iostream> 
 #include <fstream>
 #include <iomanip>
@@ -18,6 +19,11 @@ void pedir_pos(int& fila, int& columna);
 void mostrar_resultado(tJuego juego);
 void mostrar_juego_consola(const tJuego& juego);
 bool carga_juego(tJuego& juego, const string& nombreArchivo);
+
+//V2
+bool cargar_juegos(tListaJuegos& listaJuegos);
+void mostrar_juegos(const tListaJuegos listaJuegos);
+bool guardar_juegos(tListaJuegos& listaJuegos);
 
 #endif 
 

@@ -1,5 +1,8 @@
 #include "juego.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+
 using namespace std;
 
 void inicializar(tJuego& juego, int nfils, int ncols) {
@@ -298,6 +301,31 @@ void jugar(tJuego& juego, int fila, int col, tListaUndo& listaUndo) {
 		}
 		insertar_final(listaUndo, listaPos);
 	}
+
+}
+
+//V2
+
+int calcula_nivel(tJuego juego) {
+	int filas = dame_num_filas(juego);
+	int columnas = dame_num_columnas(juego);
+	int numMinas = dame_num_minas(juego);
+
+	return (filas * columnas) / numMinas;
+}
+
+tJuego crear_juego(int num_fils, int num_cols, int num_minas) {
+	tJuego juegoNuevo;
+	srand(time(NULL));
+	inicializar(juegoNuevo, num_fils, num_cols);
+
+	for (int i = 0; i < num_minas; i++) {
+		int fila_random = rand() % num_fils;
+		int columna_random = rand() % num_cols;
+		poner_mina_juego(juegoNuevo, fila_random, columna_random); //La coloca
+	}
+
+	return juegoNuevo;
 
 }
 

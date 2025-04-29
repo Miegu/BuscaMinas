@@ -47,4 +47,8 @@ void ocultar_juego(tJuego& juego, int fila, int col);
 void aplicar_undo(tJuego& juego, tListaUndo& listaUndo);
 EstadoJuego estadoJuego(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
 void jugar(tJuego& juego, int fila, int col, tListaUndo& listaUndo);
+
+//V2
+int calcula_nivel(tJuego juego);
+tJuego crear_juego(int num_fils, int num_cols, int num_minas);
 #endif 

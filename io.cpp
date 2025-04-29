@@ -68,6 +68,75 @@ bool carga_juego(tJuego& juego, const string& nombreArchivo) {
     return carga;
 }
 
+//V2
+bool cargar_juegos(tListaJuegos& listaJuegos) {
+    bool apertura = false;
+    ifstream archivoInput;
+    string nombreFichero;
+    cout << "Introduce el nombre del fichero de la Lista de Juegos: " << endl;
+    cin >> nombreFichero;
+    nombreFichero += ".txt";
+    int numJuegos;
+
+    
+    archivoInput.open(nombreFichero);
+    if (archivoInput.is_open() && archivoInput >> numJuegos && numJuegos != 0) {
+        int numFilas, numColumnas, numMinas;
+
+        for (int i = 0; i < numJuegos; i++) {
+            tJuego juegoNuevo; //Crea un JUEGO NUEVO
+            archivoInput >> numFilas;
+            archivoInput >> numColumnas;
+            inicializar(juegoNuevo, numFilas, numColumnas); //Inicializamos el juego
+            archivoInput >> numMinas;
+
+            for (int j = 0; j < numMinas; j++) {
+                int filaMina, columnaMina;
+
+                archivoInput >> filaMina;
+                archivoInput >> columnaMina;
+
+                poner_mina_juego(juegoNuevo, filaMina, columnaMina); //Colocamos las minas
+            }
+
+            listaJuegos.cont++;
+            insertarJuego(listaJuegos, juegoNuevo);
+        }
+
+        apertura = true;
+    }
+
+    return apertura;
+}
+
+void mostrar_juegos(const tListaJuegos listaJuegos) { //Ya a la hora de insertarlos se ordena
+    cout << "Mostrando lista de juegos por nivel de dificultad. . . . " << endl;
+    for (int i = 0; i < listaJuegos.cont; i++) {
+        tJuego actual = *(listaJuegos.lista[i]);
+        cout << "Juego " << i << ":" << endl;
+        cout << "      Dimension: " << actual.tablero.nFils << actual.tablero.nCols << endl;
+        cout << "      Minas: " << actual.num_minas << endl;
+    }
+}
+
+bool guardar_juegos(tListaJuegos& listaJuegos) {
+    bool apertura = false;
+
+    string nombreFichero;
+    ofstream archivoOutput;
+    cout << "Introduce el nombre del fichero: " << endl;
+    cin >> nombreFichero;
+    nombreFichero += ".txt";
+
+
+    archivoOutput.open(nombreFichero);
+
+    if (archivoOutput.is_open()) { //Falta terminar
+        apertura = true;
+    }
+
+    return apertura;
+}
 
 
 
