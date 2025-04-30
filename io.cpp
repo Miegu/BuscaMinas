@@ -76,7 +76,7 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
     cout << "Introduce el nombre del fichero de la Lista de Juegos: " << endl;
     cin >> nombreFichero;
     nombreFichero += ".txt";
-    int numJuegos;
+    int numJuegos, posicion;
 
     
     archivoInput.open(nombreFichero);
@@ -102,7 +102,8 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
             }
 
             listaJuegos.cont++;
-            insertarJuego(listaJuegos, juegoNuevo);
+            posicion = insertarJuego(listaJuegos, juegoNuevo);
+            cout << "Insertado en la posicion " << posicion + 1 << endl;
         }
 
         apertura = true;
@@ -139,6 +140,8 @@ bool guardar_juegos(tListaJuegos& listaJuegos) {
 
     return apertura;
 }
+
+
 
 
 

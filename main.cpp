@@ -44,6 +44,7 @@ int main() {
     inicializarListaJuegos(listaJuegos); //Funciona la inicialización
 
     if (!cargar_juegos(listaJuegos)) {
+        cout << "No hay juegos en el fichero." << endl;
         int filas, columnas, minas;
         cout << "Introduce el numero de filas: " << endl;
         cin >> filas;
@@ -65,7 +66,7 @@ int main() {
         } while ((estado != ABANDONADO) && !esta_terminado(juego));
         mostrar_resultado(juego);
     }
-    else {
+    else { //Si hay juegos
         mostrar_juegos(listaJuegos);
     }
 

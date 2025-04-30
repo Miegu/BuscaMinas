@@ -11,6 +11,7 @@ void destruye(tListaJuegos& listaJuegos) {
 	delete[] listaJuegos.lista; //Elimina el puntero del array
 }
 
+
 int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) { //Incluir REDIMENSIONAMIENTO, BUSQUEDA BINARIA Y ALGORITMO DE ORDENACION
 	int posicion = 0;
 
@@ -20,8 +21,9 @@ int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) { //Inclui
 
 	listaJuegos.lista[listaJuegos.cont - 1] = new tJuego(juegoNuevo); //Lo inserta al final
 
-	burbujaMejorada(listaJuegos);
-	//posicion = busquedaBinaria(listaJuegos, juegoNuevo);
+	burbujaMejorada(listaJuegos); //Ordena la lista
+
+	posicion = busquedaBinaria(listaJuegos, juegoNuevo);
 
 	return posicion;
 
@@ -71,7 +73,7 @@ void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 		inter = false;
 
 		for (int j = 0; j < listaJuegos.cont - i - 1; j++) {
-			if (calcula_nivel((*listaJuegos.lista[j])) > calcula_nivel(*(listaJuegos.lista[j + 1]))) {
+			if (calcula_nivel(*(listaJuegos.lista[j])) > calcula_nivel(*(listaJuegos.lista[j + 1]))) {
 				tPtrJuego tmp = listaJuegos.lista[j];
 				listaJuegos.lista[j] = listaJuegos.lista[j + 1];
 				listaJuegos.lista[j + 1] = tmp;
@@ -79,34 +81,28 @@ void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 				inter = true;
 			}
 		}
-
 		i++;
+
 	}while(inter);
 }
 
 int busquedaBinaria(const tListaJuegos listaJuegos, const tJuego buscado) {
-	int i = 0;
-	int j = listaJuegos.cont - 1;
-	int posicion = 0;
+	int inicio = 0;
+	int fin = listaJuegos.cont - 1;
 
-	while (i <= j) {
-		int m = i + (j - i) / 2;
+	while (inicio <= fin) {
+		int medio = inicio + (fin - inicio) / 2;
 
-		if (calcula_nivel(*(listaJuegos.lista[m])) < calcula_nivel(buscado)) {
-			i = m + 1;
+		if (calcula_nivel(*(listaJuegos.lista[medio])) == calcula_nivel(buscado)) {
+			return medio;
+		}
+
+		if (calcula_nivel(*(listaJuegos.lista[medio])) < calcula_nivel(buscado)) {
+			inicio = medio + 1;
 		}
 		else {
-			j = m - 1;
+			fin = medio - 1;
 		}
 	}
-
-	posicion = i;
-
-	for (int k = listaJuegos.cont; k > posicion; k--) {
-		listaJuegos.lista[k] = listaJuegos.lista[k - 1];
-	}
-	listaJuegos.lista[posicion] = new tJuego(buscado);
-
-	return posicion;
 
 }
