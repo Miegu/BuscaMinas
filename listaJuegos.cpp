@@ -14,22 +14,14 @@ void destruye(tListaJuegos& listaJuegos) {
 int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) { //Incluir REDIMENSIONAMIENTO, BUSQUEDA BINARIA Y ALGORITMO DE ORDENACION
 	int posicion = 0;
 
-	if (listaJuegos.cont == 0) { //Si NO hay ningun juego metido
-		listaJuegos.lista[0] = new tJuego(juegoNuevo);
-		listaJuegos.cont++;
+	if (listaJuegos.cont == listaJuegos.capacidad) {
+		redimensionamiento(listaJuegos);
 	}
-	else {
-		if (listaJuegos.cont == listaJuegos.capacidad) { //Si no hay suficiente capacidad redimensiona.
-			redimensionamiento(listaJuegos);
-		}
 
-		listaJuegos.lista[listaJuegos.cont] = new tJuego(juegoNuevo); //Lo inserta al final.
-		listaJuegos.cont++;
+	listaJuegos.lista[listaJuegos.cont - 1] = new tJuego(juegoNuevo); //Lo inserta al final
 
-		burbujaMejorada(listaJuegos); //La ordena
-
-		posicion = busquedaBinaria(listaJuegos,juegoNuevo);
-	}
+	burbujaMejorada(listaJuegos);
+	//posicion = busquedaBinaria(listaJuegos, juegoNuevo);
 
 	return posicion;
 
@@ -74,39 +66,47 @@ void redimensionamiento(tListaJuegos& listaJuegos) {
 void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 	bool inter = true;
 	int i = 0;
-	while ((i < listaJuegos.cont - 1) && inter) {
+
+	do {
 		inter = false;
 
-		for (int j = listaJuegos.cont - 1; j > i; j--) { //Desde el siguiente a la i hasta el último.
-			if (calcula_nivel(*(listaJuegos.lista[j])) < calcula_nivel(*(listaJuegos.lista[j-1]))) {
-				tPtrJuego tmp = listaJuegos.lista[j]; //Intercambiamos punteros.
-				listaJuegos.lista[j] = listaJuegos.lista[j - 1];
-				listaJuegos.lista[j - 1] = tmp;
+		for (int j = 0; j < listaJuegos.cont - i - 1; j++) {
+			if (calcula_nivel((*listaJuegos.lista[j])) > calcula_nivel(*(listaJuegos.lista[j + 1]))) {
+				tPtrJuego tmp = listaJuegos.lista[j];
+				listaJuegos.lista[j] = listaJuegos.lista[j + 1];
+				listaJuegos.lista[j + 1] = tmp;
+
 				inter = true;
 			}
 		}
-		if (inter) {
-			i++;
-		}
-	}
+
+		i++;
+	}while(inter);
 }
 
 int busquedaBinaria(const tListaJuegos listaJuegos, const tJuego buscado) {
-	int inicio = 0, fin = listaJuegos.cont - 1, medio;
-	int encontrado = -1;
+	int i = 0;
+	int j = listaJuegos.cont - 1;
+	int posicion = 0;
 
-	while (inicio <= fin) {
-		medio = (inicio + fin) / 2;
+	while (i <= j) {
+		int m = i + (j - i) / 2;
 
-		if (calcula_nivel(*(listaJuegos.lista[medio])) == calcula_nivel(buscado)) {
-			encontrado = medio; // Encontrado
-		}
-		else if (calcula_nivel(*(listaJuegos.lista[medio])) < calcula_nivel(buscado)) {
-			inicio = medio + 1; // Buscar en la mitad derecha
+		if (calcula_nivel(*(listaJuegos.lista[m])) < calcula_nivel(buscado)) {
+			i = m + 1;
 		}
 		else {
-			fin = medio - 1; // Buscar en la mitad izquierda
+			j = m - 1;
 		}
 	}
-	return encontrado;
+
+	posicion = i;
+
+	for (int k = listaJuegos.cont; k > posicion; k--) {
+		listaJuegos.lista[k] = listaJuegos.lista[k - 1];
+	}
+	listaJuegos.lista[posicion] = new tJuego(buscado);
+
+	return posicion;
+
 }

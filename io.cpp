@@ -85,8 +85,10 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
 
         for (int i = 0; i < numJuegos; i++) {
             tJuego juegoNuevo; //Crea un JUEGO NUEVO
+
             archivoInput >> numFilas;
             archivoInput >> numColumnas;
+
             inicializar(juegoNuevo, numFilas, numColumnas); //Inicializamos el juego
             archivoInput >> numMinas;
 
@@ -114,7 +116,7 @@ void mostrar_juegos(const tListaJuegos listaJuegos) { //Ya a la hora de insertar
     for (int i = 0; i < listaJuegos.cont; i++) {
         tJuego actual = *(listaJuegos.lista[i]);
         cout << "Juego " << i << ":" << endl;
-        cout << "      Dimension: " << actual.tablero.nFils << actual.tablero.nCols << endl;
+        cout << "      Dimension: " << actual.tablero.nFils << " x " << actual.tablero.nCols << endl;
         cout << "      Minas: " << actual.num_minas << endl;
     }
 }
