@@ -5,70 +5,80 @@
 #include "io.h"
 #include "juego.h"
 #include "listaUndo.h"
+#include "listaJuegos.h"
 #include <iostream>
 using namespace std;
 
+
 int main() {
-    tJuego juego;
     tListaUndo listaUndo;
-    string nombreArchivo;
-    EstadoJuego estado;
+    inicializar_listaUndo(listaUndo);
     tListaJuegos listaJuegos;
+    inicializarListaJuegos(listaJuegos);
+    tListaPosiciones listaPosiciones;
+    inicializar_listaPosiciones(listaPosiciones);
+    tJuego juego;
 
-    //cout << "Introduce el nombre del archivo: ";
-    //getline(cin, nombreArchivo);
-    //nombreArchivo += ".txt";
-
-    //if (carga_juego(juego, nombreArchivo)) {
-        //inicializar_listaUndo(listaUndo);
-
-        //do {
-          //  mostrar_cabecera();
-            //mostrar_juego_consola(juego);
-
-            //int fila, columna;
-            //pedir_pos(fila, columna);
-
-            //estado = estadoJuego(juego, fila, columna, listaUndo);
-
-        //} while ((estado != ABANDONADO) && !esta_terminado(juego));
-        //mostrar_resultado(juego);
-    //}
-    //else {
-      //  cout << "Error al cargar el juego." << endl;
-    //}
-
-    //return 0;
-
-    //VERSIÓN 2:
-    inicializarListaJuegos(listaJuegos); //Funciona la inicialización
-
+    bool jugarPartida = false;
+    int pos;
+    // Si no hay juegos, cargarlos
     if (!cargar_juegos(listaJuegos)) {
-        cout << "No hay juegos en el fichero." << endl;
-        int filas, columnas, minas;
-        cout << "Introduce el numero de filas: " << endl;
-        cin >> filas;
-        cout << "Introduce el numero de columnas: " << endl;
-        cin >> columnas;
-        cout << "Introduce el numero de minas: " << endl;
-        cin >> minas;
-        crear_juego(filas, columnas, minas);
+        cout << "Creando nuevo juego..." << endl;
+        pos = crearNuevoJuego(listaJuegos);
+        jugarPartida = true;
+        mostrar_juegos(listaJuegos);
+        juego = dame_juegos(listaJuegos, pos);
+    }
+    else {
+        mostrar_juegos(listaJuegos);
 
+        int opcion;
+        cout << "1. Juego nuevo" << endl;
+        cout << "2. Juego existente" << endl;
+        cout << "Opcion: " << endl;
+        cin >> opcion;
+
+        if (opcion == 1) {
+            jugarPartida = true;
+            pos = crearNuevoJuego(listaJuegos);
+            mostrar_juegos(listaJuegos);
+            juego = dame_juegos(listaJuegos, pos);
+        }
+        else {
+            int seleccion;
+            cout << "Seleccione juego (0-" << numero_juegos(listaJuegos) - 1 << "): ";
+            cin >> seleccion;
+
+            if (seleccion >= 0 && seleccion < numero_juegos(listaJuegos)) {
+                juego = dame_juegos(listaJuegos, seleccion);
+                pos = seleccion;
+                jugarPartida = true;
+            }
+        }
+
+    }
+    if (jugarPartida) {
+        // Jugar
+        EstadoJuego estado = ACTIVO;
         do {
             mostrar_cabecera();
             mostrar_juego_consola(juego);
-
             int fila, columna;
             pedir_pos(fila, columna);
+            estado = procesarJugada(juego, fila, columna, listaUndo);
+        } while (estado == ACTIVO);
 
-            estado = estadoJuego(juego, fila, columna, listaUndo);
-
-        } while ((estado != ABANDONADO) && !esta_terminado(juego));
+        // Finalizar
+        if (esta_terminado(juego) && pos >= 0) {
+            eliminar(listaJuegos, pos);
+        }
         mostrar_resultado(juego);
     }
-    else { //Si hay juegos
-        mostrar_juegos(listaJuegos);
-    }
+
+    // Guardar estado final
+    guardar_juegos(listaJuegos);
+    destruye(listaJuegos);
+    destruye(listaUndo);
 
     return 0;
 }
