@@ -7,11 +7,11 @@ void inicializar_listaUndo(tListaUndo& lista_undo) {
 }
 
 void insertar_final(tListaUndo& lista_undo, const tListaPosiciones lista_pos) {
-	if (lista_undo.cont == MAX_UNDO) {
-		for (int i = 0; i < MAX_UNDO - 1; i++) {
+	if (lista_undo.cont >= MAX_UNDO)
+	{
+		delete lista_undo.lista[0]; // Liberamos el primer elemento
+		for (int i = 0; i < MAX_UNDO - 1; i++)
 			lista_undo.lista[i] = lista_undo.lista[i + 1];
-			
-		}
 		lista_undo.cont--;
 	}
 
@@ -39,5 +39,5 @@ void destruye(tListaUndo& listaUndo) {
 }
 
 void eliminar_ultimo_elemento(tListaUndo& listaUndo) {
-	delete listaUndo.lista[listaUndo.cont-1];
+	delete listaUndo.lista[listaUndo.cont - 1];
 }
