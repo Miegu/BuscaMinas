@@ -26,4 +26,3 @@ void mostrar_juegos(const tListaJuegos listaJuegos);
 bool guardar_juegos(tListaJuegos& listaJuegos);
 
 #endif 
-

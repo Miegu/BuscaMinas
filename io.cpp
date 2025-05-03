@@ -32,11 +32,14 @@ void pedir_pos(int& fila, int& columna) {
 
 void mostrar_resultado(tJuego juego) {
     mostrar_juego_consola(juego);
-    if (mina_explotada(juego)) {
+    if (juego.estado == PERDIDO) {
         cout << "La mina a explotado, has perdido :c " << endl;
     }
-    else {
+    else if (juego.estado == GANADO) {
         cout << "Has ganado! No ha explotado ninguna mina." << endl;
+    }
+    else if (juego.estado == ABANDONADO) {
+        cout << "Partida Abandonada" << endl;
     }
 }
 
@@ -78,7 +81,7 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
     nombreFichero += ".txt";
     int numJuegos, posicion;
 
-    
+
     archivoInput.open(nombreFichero);
     if (archivoInput.is_open() && archivoInput >> numJuegos && numJuegos != 0) {
         int numFilas, numColumnas, numMinas;
@@ -101,7 +104,6 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
                 poner_mina_juego(juegoNuevo, filaMina, columnaMina); //Colocamos las minas
             }
 
-            listaJuegos.cont++;
             posicion = insertarJuego(listaJuegos, juegoNuevo);
             cout << "Insertado en la posicion " << posicion + 1 << endl;
         }
