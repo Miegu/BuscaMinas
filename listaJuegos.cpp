@@ -59,7 +59,13 @@ tJuego dame_juegos(const tListaJuegos listaJuegos, const int pos) { //Retorna el
 }
 
 void eliminar(tListaJuegos& listaJuegos, const int pos) {
-	delete listaJuegos.lista[pos - 1];
+	if (pos >= 0 && pos < listaJuegos.cont) {
+		delete listaJuegos.lista[pos];
+		for (int i = pos; i < listaJuegos.cont - 1; i++) {
+			listaJuegos.lista[i] = listaJuegos.lista[i + 1];
+		}
+		listaJuegos.cont--;
+	}
 }
 
 void redimensionamiento_juegos(tListaJuegos& listaJuegos) {

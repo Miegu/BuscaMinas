@@ -138,6 +138,14 @@ bool guardar_juegos(tListaJuegos& listaJuegos) {
 
     if (archivoOutput.is_open()) { //Falta terminar
         apertura = true;
+        archivoOutput << listaJuegos.cont << endl;
+        for (int i = 0; i < listaJuegos.cont; i++) {
+            tJuego actual = *listaJuegos.lista[i];
+            archivoOutput << actual.tablero.nFils << " "
+                << actual.tablero.nCols << endl
+                << actual.num_minas << endl;
+            // Escribir posiciones de minas
+        }
     }
 
     return apertura;
