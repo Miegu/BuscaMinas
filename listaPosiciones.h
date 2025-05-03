@@ -24,6 +24,6 @@ int dame_posX(const tListaPosiciones& lista_pos, int i);
 int dame_posY(const tListaPosiciones& lista_pos, int i);
 void destruye(tListaPosiciones& listaPosiciones);
 tPosicion damePosicion(const tListaPosiciones listaPosiciones, int pos);
-void redimensionamiento(tListaPosiciones& listaPosiciones);
+void redimensionamiento_posiciones(tListaPosiciones& listaPosiciones);
 
 #endif
