@@ -28,7 +28,7 @@ int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) {
 
 	int nivelDificultad = calcula_nivel(juegoNuevo);
 	int i = 0;
-	while (i < listaJuegos.cont && calcula_nivel(*(listaJuegos.lista[i])) < nivelDificultad)
+	while (i < listaJuegos.cont && calcula_nivel(*(listaJuegos.lista[i])) > nivelDificultad)
 		i++;
 
 	// Hacemos espacio para el nuevo juego

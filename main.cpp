@@ -71,13 +71,18 @@ int main() {
 
         // Finalizar
         if (esta_terminado(juego) && pos >= 0) {
+            mostrar_resultado(juego);
+            if (guardar_juegos(listaJuegos)) {
+                cout << "Archivo guardado con exito." << endl;
+            }
+            else {
+                cout << "Archivo no guardado." << endl;
+            }
             eliminar(listaJuegos, pos);
         }
-        mostrar_resultado(juego);
+        
     }
 
-    // Guardar estado final
-    guardar_juegos(listaJuegos);
 
     destruye(listaJuegos);
     destruye(listaUndo);
