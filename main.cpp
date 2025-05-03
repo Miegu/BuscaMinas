@@ -7,16 +7,17 @@
 #include "listaUndo.h"
 #include "listaJuegos.h"
 #include <iostream>
+#include "memoryleaks.h"
 using namespace std;
 
 
 int main() {
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
     tListaUndo listaUndo;
     inicializar_listaUndo(listaUndo);
     tListaJuegos listaJuegos;
     inicializarListaJuegos(listaJuegos);
-    tListaPosiciones listaPosiciones;
-    inicializar_listaPosiciones(listaPosiciones);
     tJuego juego;
 
     bool jugarPartida = false;
@@ -77,8 +78,10 @@ int main() {
 
     // Guardar estado final
     guardar_juegos(listaJuegos);
+
     destruye(listaJuegos);
     destruye(listaUndo);
+    
 
     return 0;
 }

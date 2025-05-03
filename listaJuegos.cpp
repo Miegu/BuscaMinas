@@ -1,5 +1,7 @@
 #include "listaJuegos.h"
 #include <iostream>
+#include "memoryleaks.h"
+
 using namespace std;
 
 void inicializarListaJuegos(tListaJuegos& listaJuegos) {
@@ -9,6 +11,9 @@ void inicializarListaJuegos(tListaJuegos& listaJuegos) {
 }
 
 void destruye(tListaJuegos& listaJuegos) {
+	for (int i = 0; i < listaJuegos.cont; i++) {
+		delete listaJuegos.lista[i]; //Elimina cada uno de los elementos
+	}
 	delete[] listaJuegos.lista; //Elimina el puntero del array
 }
 

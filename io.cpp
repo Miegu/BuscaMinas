@@ -110,6 +110,10 @@ bool cargar_juegos(tListaJuegos& listaJuegos) {
 
         apertura = true;
     }
+    else {
+        archivoInput.close();
+        cout << "No se pudo abrir el archivo." << endl;
+    }
 
     return apertura;
 }
@@ -140,7 +144,7 @@ bool guardar_juegos(tListaJuegos& listaJuegos) {
         apertura = true;
         archivoOutput << listaJuegos.cont << endl;
         for (int i = 0; i < listaJuegos.cont; i++) {
-            tJuego actual = *listaJuegos.lista[i];
+            tJuego actual = *(listaJuegos.lista[i]);
             archivoOutput << actual.tablero.nFils << " "
                 << actual.tablero.nCols << endl
                 << actual.num_minas << endl;

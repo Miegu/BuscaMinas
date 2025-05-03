@@ -190,7 +190,7 @@ void descubrir_celdas(tJuego& juego, int fila, int columna, tListaPosiciones& li
 		tCelda celda = dame_celda(juego.tablero, fila, columna);
 		descubrir_celda(celda);
 		poner_celda(juego.tablero, fila, columna, celda);
-		insertar_final(lista_pos, fila, columna);
+		insertar_final(lista_pos, fila, columna); //Añade a la lista dinamica de posiciones
 		juego.num_descubiertas++;
 		if (contiene_mina(juego, fila, columna)) {
 			juego.mina_explotada = true;
@@ -221,7 +221,7 @@ void aplicar_undo(tJuego& juego, tListaUndo& listaUndo) {
 	if (longitud_listaUndo(listaUndo) > 0) {
 		tListaPosiciones ultimoMov = ultimos_movimientos(listaUndo);
 
-		for (int i = 0; i < longitud(ultimoMov); i++) {
+		for (int i = 0; i < longitud(ultimoMov); i++) { //Las vuelve a ocultar
 			int fila = dame_posX(ultimoMov, i);
 			int col = dame_posY(ultimoMov, i);
 
@@ -233,9 +233,11 @@ void aplicar_undo(tJuego& juego, tListaUndo& listaUndo) {
 				poner_celda(juego.tablero, fila, col, celda);
 				juego.num_descubiertas--;
 			}
+
 		}
 
-		eliminar_ultimo(listaUndo);
+		eliminar_ultimo_elemento(listaUndo); //Elimina la última lista de undo.
+		eliminar_ultimo(listaUndo); //Reduce el contador
 	}
 }
 
@@ -266,8 +268,10 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 			!es_visible(juego, fila, col) &&
 			!esta_marcada(juego, fila, col)) {
 
-			descubrir_celdas(juego, fila, col, listaPos);
-			insertar_final(listaUndo, listaPos);
+			descubrir_celdas(juego, fila, col, listaPos); //Descubre las celdas
+
+			insertar_final(listaUndo, listaPos); //Inserta la lista en la lista final de undo.
+
 
 			if (contiene_mina(juego, fila, col)) {
 				juego.estado = PERDIDO;

@@ -145,6 +145,7 @@
     <ClInclude Include="listaJuegos.h" />
     <ClInclude Include="listaPosiciones.h" />
     <ClInclude Include="listaUndo.h" />
+    <ClInclude Include="memoryleaks.h" />
     <ClInclude Include="tablero.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,4 +1,5 @@
 #include "listaPosiciones.h"
+#include "memoryleaks.h"
 #include <iostream>
 
 void inicializar_listaPosiciones(tListaPosiciones& lista_pos) {
@@ -13,11 +14,9 @@ void insertar_final(tListaPosiciones& lista_pos, int x, int y) { // Inserta al f
 	}
 
 	//Define una posicion nueva
-	tPosicion posicion;
-	posicion.posx = x;
-	posicion.posy = y;
-
-	lista_pos.lista[lista_pos.cont - 1] = new tPosicion(posicion); //Inserta al final
+	lista_pos.lista[lista_pos.cont] = new tPosicion(); //Inserta al final
+	lista_pos.lista[lista_pos.cont]->posx = x;
+	lista_pos.lista[lista_pos.cont]->posy = y;
 	lista_pos.cont++;
 }
 
@@ -47,8 +46,15 @@ int dame_posY(const tListaPosiciones& lista_pos, int i) { // Elemento en posicio
 
 //VERSIÓN 2
 void destruye(tListaPosiciones& listaPosiciones) {
-	delete[] listaPosiciones.lista;
+	for (int i = 0; i < listaPosiciones.cont; i++) {
+		delete listaPosiciones.lista[i]; // Libera cada objeto dinámico
+	}
+	delete[] listaPosiciones.lista; // Libera el array de punteros
+	listaPosiciones.lista = nullptr; 
+	listaPosiciones.cont = 0; // Reinicia el contador
 }
+
+
 
 tPosicion damePosicion(const tListaPosiciones listaPosiciones, int pos) {
 	return *(listaPosiciones.lista[pos]);
@@ -57,8 +63,10 @@ tPosicion damePosicion(const tListaPosiciones listaPosiciones, int pos) {
 
 void redimensionamiento_posiciones(tListaPosiciones& listaPosiciones) {
 	tPtrPosicion* listaAmpliada = new tPtrPosicion[MAX_LISTA * 2];
+
 	for (int i = 0; i < listaPosiciones.cont; i++)
 		listaAmpliada[i] = listaPosiciones.lista[i];
+
 	delete[] listaPosiciones.lista; // Corregido
 	listaPosiciones.lista = listaAmpliada;
 	listaPosiciones.capacidad *= 2;
