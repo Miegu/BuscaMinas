@@ -19,9 +19,10 @@ int numero_juegos(const tListaJuegos listaJuegos);
 bool es_vacia(const tListaJuegos listaJuegos);
 tJuego dame_juegos(const tListaJuegos listaJuegos, const int pos);
 void eliminar(tListaJuegos& listaJuegos, const int pos);
-void redimensionamiento(tListaJuegos& listaJuegos);
+void redimensionamiento_juegos(tListaJuegos& listaJuegos);
 void burbujaMejorada(tListaJuegos& listaJuegos);
 int busquedaBinaria(const tListaJuegos listaJuegos, const tJuego buscado);
+int crearNuevoJuego(tListaJuegos& listaJuegos);
 
 #endif // !LISTAJUEGOS_H
 

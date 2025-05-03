@@ -1,5 +1,6 @@
 #include "listaJuegos.h"
 #include <iostream>
+using namespace std;
 
 void inicializarListaJuegos(tListaJuegos& listaJuegos) {
 	listaJuegos.cont = 0;
@@ -12,22 +13,32 @@ void destruye(tListaJuegos& listaJuegos) {
 }
 
 
-int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) { //Incluir REDIMENSIONAMIENTO, BUSQUEDA BINARIA Y ALGORITMO DE ORDENACION
-	int posicion = 0;
+int insertarJuego(tListaJuegos& listaJuegos, const tJuego juegoNuevo) {
+	int posicion = -1;
 
-	if (listaJuegos.cont == listaJuegos.capacidad) {
-		redimensionamiento(listaJuegos);
+	if (listaJuegos.cont >= listaJuegos.capacidad) {
+		redimensionamiento_juegos(listaJuegos);
 	}
+	burbujaMejorada(listaJuegos);
 
-	listaJuegos.lista[listaJuegos.cont - 1] = new tJuego(juegoNuevo); //Lo inserta al final
+	int nivelDificultad = calcula_nivel(juegoNuevo);
+	int i = 0;
+	while (i < listaJuegos.cont && calcula_nivel(*(listaJuegos.lista[i])) < nivelDificultad)
+		i++;
 
-	burbujaMejorada(listaJuegos); //Ordena la lista
+	// Hacemos espacio para el nuevo juego
+	for (int j = listaJuegos.cont; j > i; j--)
+		listaJuegos.lista[j] = listaJuegos.lista[j - 1];
 
-	posicion = busquedaBinaria(listaJuegos, juegoNuevo);
+	// Insertamos el juego
+	listaJuegos.lista[i] = new tJuego(juegoNuevo);
+	listaJuegos.cont++;
+	posicion = i;
 
 	return posicion;
-
 }
+
+
 
 int numero_juegos(const tListaJuegos listaJuegos) {
 	return listaJuegos.cont; //Retorna el nº de juegos del contador
@@ -48,11 +59,10 @@ tJuego dame_juegos(const tListaJuegos listaJuegos, const int pos) { //Retorna el
 }
 
 void eliminar(tListaJuegos& listaJuegos, const int pos) {
-	delete listaJuegos.lista[pos - 1]; //Elimina el puntero, no el objeto!
+	delete listaJuegos.lista[pos - 1];
 }
 
-
-void redimensionamiento(tListaJuegos& listaJuegos) {
+void redimensionamiento_juegos(tListaJuegos& listaJuegos) {
 	tPtrJuego* juegoAmpliado = new tPtrJuego[listaJuegos.capacidad * 2]; //Duplicamos la capacidad.
 
 	for (int i = 0; i < listaJuegos.cont; i++) { //Copia los punteros de la anterior lista
@@ -64,6 +74,8 @@ void redimensionamiento(tListaJuegos& listaJuegos) {
 	listaJuegos.lista = juegoAmpliado; //Ponemos el nuevo puntero
 	listaJuegos.capacidad *= 2;
 }
+
+
 
 void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 	bool inter = true;
@@ -83,18 +95,20 @@ void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 		}
 		i++;
 
-	}while(inter);
+	} while (inter);
 }
+
 
 int busquedaBinaria(const tListaJuegos listaJuegos, const tJuego buscado) {
 	int inicio = 0;
 	int fin = listaJuegos.cont - 1;
+	int encontrado = -1;
 
 	while (inicio <= fin) {
 		int medio = inicio + (fin - inicio) / 2;
 
 		if (calcula_nivel(*(listaJuegos.lista[medio])) == calcula_nivel(buscado)) {
-			return medio;
+			encontrado = medio;
 		}
 
 		if (calcula_nivel(*(listaJuegos.lista[medio])) < calcula_nivel(buscado)) {
@@ -105,4 +119,20 @@ int busquedaBinaria(const tListaJuegos listaJuegos, const tJuego buscado) {
 		}
 	}
 
+	return encontrado;
 }
+
+int crearNuevoJuego(tListaJuegos& listaJuegos) {
+	int fils, cols, minas;
+	cout << "Numero de filas: ";
+	cin >> fils;
+	cout << "Numero de columnas: ";
+	cin >> cols;
+	cout << "Numero de minas: ";
+	cin >> minas;
+
+	tJuego nuevoJuego = crear_juego(fils, cols, minas);
+	int pos = insertarJuego(listaJuegos, nuevoJuego);
+	cout << "Juego creado en posicion " << pos << endl;
+	return pos;
+};
