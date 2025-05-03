@@ -15,6 +15,7 @@ void insertar_final(tListaPosiciones& lista_pos, int x, int y) { // Inserta al f
 
 	//Define una posicion nueva
 	lista_pos.lista[lista_pos.cont] = new tPosicion(); //Inserta al final
+
 	lista_pos.lista[lista_pos.cont]->posx = x;
 	lista_pos.lista[lista_pos.cont]->posy = y;
 	lista_pos.cont++;

@@ -58,6 +58,7 @@ int main() {
         }
 
     }
+
     if (jugarPartida) {
         // Jugar
         EstadoJuego estado = ACTIVO;
@@ -83,9 +84,8 @@ int main() {
         
     }
 
-
-    destruye(listaJuegos);
     destruye(listaUndo);
+    destruye(listaJuegos);
     
 
     return 0;

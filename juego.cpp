@@ -258,11 +258,14 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 		cin >> y;
 	}
 	else if (fila == -3 && col == -3) {
-		if (longitud_listaUndo(listaUndo) > 0) aplicar_undo(juego, listaUndo);
+		if (longitud_listaUndo(listaUndo) > 0) {
+			aplicar_undo(juego, listaUndo);
+			juego.num_jugadas--;
+		}
 	}
 	else {
 		tListaPosiciones listaPos;
-		inicializar_listaPosiciones(listaPos);
+		inicializar_listaPosiciones(listaPos); //Inicializa lista posiciones
 
 		if (es_valida(juego.tablero, fila, col) &&
 			!es_visible(juego, fila, col) &&
@@ -271,7 +274,7 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 			descubrir_celdas(juego, fila, col, listaPos); //Descubre las celdas
 
 			insertar_final(listaUndo, listaPos); //Inserta la lista en la lista final de undo.
-
+			destruye(listaPos);
 
 			if (contiene_mina(juego, fila, col)) {
 				juego.estado = PERDIDO;
@@ -279,9 +282,11 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 			else if (esta_completo(juego)) {
 				juego.estado = GANADO;
 			}
-		}
-	}
 
+			juego.num_jugadas++;
+		}
+		
+	}
 	return  juego.estado;
 }
 

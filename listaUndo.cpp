@@ -8,20 +8,28 @@ void inicializar_listaUndo(tListaUndo& lista_undo) {
 	//No hace falta inicializar ya esta inicializada al ser un array dinamico
 }
 
-void insertar_final(tListaUndo& lista_undo, const tListaPosiciones lista_pos) {
-	if (lista_undo.cont == MAX_UNDO)
-	{
-		destruye(*(lista_undo.lista[0])); //Eliminamos la primera lista
+ void insertar_final(tListaUndo& lista_undo, const tListaPosiciones lista_pos) {
+       if (lista_undo.cont == MAX_UNDO) {
+           destruye(*(lista_undo.lista[0])); // Elimina la primera lista
+           delete lista_undo.lista[0];
 
-		for (int i = 0; i < MAX_UNDO - 1; i++) {
-			lista_undo.lista[i] = lista_undo.lista[i + 1];
-		}
-		lista_undo.cont--;
-	}
+           for (int i = 0; i < MAX_UNDO - 1; i++) {
+               lista_undo.lista[i] = lista_undo.lista[i + 1];
+           }
+           lista_undo.cont--;
+       }
 
-	lista_undo.lista[lista_undo.cont] = new tListaPosiciones(lista_pos); 
-	lista_undo.cont++;
-}
+       // Crea una copia lista_pos
+       tListaPosiciones* nuevaLista = new tListaPosiciones;
+       inicializar_listaPosiciones(*nuevaLista);
+       for (int i = 0; i < lista_pos.cont; i++) {
+           insertar_final(*nuevaLista, dame_posX(lista_pos, i), dame_posY(lista_pos, i));
+       }
+
+       lista_undo.lista[lista_undo.cont] = nuevaLista;
+       lista_undo.cont++;
+   }
+   
 
 void eliminar_ultimo(tListaUndo& lista) {
 	if (lista.cont > 0) {
@@ -43,6 +51,7 @@ void destruye(tListaUndo& listaUndo) {
 		destruye(*(listaUndo.lista[i]));
 		delete listaUndo.lista[i];
 	}
+	listaUndo.cont = 0;
 }
 
 void eliminar_ultimo_elemento(tListaUndo& listaUndo) {
