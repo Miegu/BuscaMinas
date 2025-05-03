@@ -63,5 +63,3 @@ void redimensionamiento_posiciones(tListaPosiciones& listaPosiciones) {
 	listaPosiciones.lista = listaAmpliada;
 	listaPosiciones.capacidad *= 2;
 }
-
-}

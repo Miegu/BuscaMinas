@@ -85,7 +85,7 @@ void burbujaMejorada(tListaJuegos& listaJuegos) { //Ordenar por complejidad.
 		inter = false;
 
 		for (int j = 0; j < listaJuegos.cont - i - 1; j++) {
-			if (calcula_nivel(*(listaJuegos.lista[j])) > calcula_nivel(*(listaJuegos.lista[j + 1]))) {
+			if (calcula_nivel(*(listaJuegos.lista[j])) < calcula_nivel(*(listaJuegos.lista[j + 1]))) {
 				tPtrJuego tmp = listaJuegos.lista[j];
 				listaJuegos.lista[j] = listaJuegos.lista[j + 1];
 				listaJuegos.lista[j + 1] = tmp;
