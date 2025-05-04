@@ -56,7 +56,6 @@ void destruye(tListaPosiciones& listaPosiciones) {
 }
 
 
-
 tPosicion damePosicion(const tListaPosiciones listaPosiciones, int pos) {
 	return *(listaPosiciones.lista[pos]);
 }

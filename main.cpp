@@ -84,7 +84,7 @@ int main() {
         
     }
 
-    destruye(listaUndo);
+    destruye(listaUndo); 
     destruye(listaJuegos);
     
 

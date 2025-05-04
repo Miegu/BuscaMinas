@@ -9,6 +9,7 @@ void inicializar_listaUndo(tListaUndo& lista_undo) {
 }
 
  void insertar_final(tListaUndo& lista_undo, const tListaPosiciones lista_pos) {
+
        if (lista_undo.cont == MAX_UNDO) {
            destruye(*(lista_undo.lista[0])); // Elimina la primera lista
            delete lista_undo.lista[0];
@@ -16,8 +17,10 @@ void inicializar_listaUndo(tListaUndo& lista_undo) {
            for (int i = 0; i < MAX_UNDO - 1; i++) {
                lista_undo.lista[i] = lista_undo.lista[i + 1];
            }
+		   
            lista_undo.cont--;
        }
+
 
        // Crea una copia lista_pos
        tListaPosiciones* nuevaLista = new tListaPosiciones;
@@ -47,12 +50,16 @@ tListaPosiciones ultimos_movimientos(const tListaUndo& lista) { //última lista d
 
 //V2
 void destruye(tListaUndo& listaUndo) {
-	for (int i = 0; i < listaUndo.cont; i++) {
-		destruye(*(listaUndo.lista[i]));
-		delete listaUndo.lista[i];
-	}
-	listaUndo.cont = 0;
+    for (int i = 0; i < listaUndo.cont; i++) {
+        if (listaUndo.lista[i] != nullptr) {
+            destruye(*(listaUndo.lista[i])); // Libera el contenido interno
+            delete listaUndo.lista[i];      
+            listaUndo.lista[i] = nullptr;   //Evita que apunte a una memoria inválida.
+        }
+    }
+    listaUndo.cont = 0;
 }
+
 
 void eliminar_ultimo_elemento(tListaUndo& listaUndo) {
 
@@ -63,7 +70,7 @@ void eliminar_ultimo_elemento(tListaUndo& listaUndo) {
 			delete listaUndo.lista[ultimoIndice]; // Libera el puntero
 			listaUndo.lista[ultimoIndice] = nullptr;
 		}
-		listaUndo.cont--;
+		
 	}
 }
 
