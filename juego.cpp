@@ -137,7 +137,7 @@ bool esta_terminado(const tJuego& juego) {
 void poner_mina_juego(tJuego& juego, int fila, int columna) {
 	if (es_valida(juego.tablero, fila, columna)) {
 		tCelda celda = dame_celda(juego.tablero, fila, columna);
-		if (!es_mina(celda)) {
+		if (!es_mina(celda)){
 			poner_mina(celda);
 			poner_celda(juego.tablero, fila, columna, celda);
 			juego.num_minas++;
@@ -149,9 +149,11 @@ void poner_mina_juego(tJuego& juego, int fila, int columna) {
 				int nCol = columna + direcciones[i][1];
 				if (es_valida(juego.tablero, nFila, nCol)) {
 					tCelda nCelda = dame_celda(juego.tablero, nFila, nCol);
-					int num = dame_numero(juego, nFila, nCol);
-					poner_numero(nCelda, num + 1);
-					poner_celda(juego.tablero, nFila, nCol, nCelda);
+					if (!es_mina(nCelda)) {
+						int num = dame_numero(juego, nFila, nCol);
+						poner_numero(nCelda, num + 1);
+						poner_celda(juego.tablero, nFila, nCol, nCelda);
+					}
 				}
 			}
 		}

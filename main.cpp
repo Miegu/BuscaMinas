@@ -92,10 +92,7 @@ int main() {
                 cout << "Archivo no guardado." << endl;
             }
         }
-
     }
-
-
     destruye(listaUndo); 
     destruye(listaJuegos);
     
