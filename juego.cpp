@@ -249,8 +249,8 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 	juego.estado = ACTIVO;
 
 	if (fila == -1 && col == -1) {
-		cout << "Partida Abandonada";
 		juego.estado = ABANDONADO;
+		
 	}
 	else if (fila == -2 && col == -2) {
 		int x, y;

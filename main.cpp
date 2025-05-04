@@ -85,6 +85,7 @@ int main() {
             }
         }
         else if (juego.estado == ABANDONADO) {
+            mostrar_resultado(juego);
             if (guardar_juegos(listaJuegos)) {
                 cout << "Archivo guardado con exito." << endl;
             }
