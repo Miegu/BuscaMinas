@@ -22,7 +22,7 @@ int main() {
 
     bool jugarPartida = false;
     int pos;
-    // Si no hay juegos, cargarlos
+    // Si no hay juegos, crearlos
     if (!cargar_juegos(listaJuegos)) {
         cout << "Creando nuevo juego..." << endl;
         pos = crearNuevoJuego(listaJuegos);
@@ -32,31 +32,34 @@ int main() {
     }
     else {
         mostrar_juegos(listaJuegos);
-
+        
         int opcion;
-        cout << "1. Juego nuevo" << endl;
-        cout << "2. Juego existente" << endl;
-        cout << "Opcion: " << endl;
-        cin >> opcion;
+        do {
+            cout << "1. Juego nuevo" << endl;
+            cout << "2. Juego existente" << endl;
+            cout << "Opcion: ";
+            cin >> opcion;
 
-        if (opcion == 1) {
-            jugarPartida = true;
-            pos = crearNuevoJuego(listaJuegos);
-            mostrar_juegos(listaJuegos);
-            juego = dame_juegos(listaJuegos, pos);
-        }
-        else {
-            int seleccion;
-            cout << "Seleccione juego (0-" << numero_juegos(listaJuegos) - 1 << "): ";
-            cin >> seleccion;
-
-            if (seleccion >= 0 && seleccion < numero_juegos(listaJuegos)) {
-                juego = dame_juegos(listaJuegos, seleccion);
-                pos = seleccion;
+            if (opcion == 1) {
                 jugarPartida = true;
+                pos = crearNuevoJuego(listaJuegos);
+                mostrar_juegos(listaJuegos);
+                juego = dame_juegos(listaJuegos, pos);
             }
-        }
+            else if (opcion == 2) {
+                int seleccion;
+                cout << "Seleccione juego (0-" << numero_juegos(listaJuegos) - 1 << "): ";
+                cin >> seleccion;
 
+                if (seleccion >= 0 && seleccion < numero_juegos(listaJuegos)) {
+                    juego = dame_juegos(listaJuegos, seleccion);
+                    pos = seleccion;
+                    jugarPartida = true;
+                }
+            }
+            else cout << "Seleccione una opcion valida: " << endl;
+            
+        } while (opcion != 1 && opcion != 2);
     }
 
     if (jugarPartida) {
@@ -73,16 +76,25 @@ int main() {
         // Finalizar
         if (esta_terminado(juego) && pos >= 0) {
             mostrar_resultado(juego);
+            eliminar(listaJuegos, pos);
             if (guardar_juegos(listaJuegos)) {
                 cout << "Archivo guardado con exito." << endl;
             }
             else {
                 cout << "Archivo no guardado." << endl;
             }
-            eliminar(listaJuegos, pos);
         }
-        
+        else if (juego.estado == ABANDONADO) {
+            if (guardar_juegos(listaJuegos)) {
+                cout << "Archivo guardado con exito." << endl;
+            }
+            else {
+                cout << "Archivo no guardado." << endl;
+            }
+        }
+
     }
+
 
     destruye(listaUndo); 
     destruye(listaJuegos);

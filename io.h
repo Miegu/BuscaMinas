@@ -23,6 +23,6 @@ bool carga_juego(tJuego& juego, const string& nombreArchivo);
 //V2
 bool cargar_juegos(tListaJuegos& listaJuegos);
 void mostrar_juegos(const tListaJuegos listaJuegos);
-bool guardar_juegos(tListaJuegos& listaJuegos);
+bool guardar_juegos(const tListaJuegos& listaJuegos);
 
 #endif 

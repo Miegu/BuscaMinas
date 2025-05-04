@@ -121,6 +121,7 @@ void explotar_mina(tJuego& juego, int fila, int columna) {
 		tCelda celda = dame_celda(juego.tablero, fila, columna);
 		if (es_mina(celda) && es_visible(juego, fila, columna)) {
 			juego.mina_explotada = true;
+			juego.estado = PERDIDO;
 		}
 	}
 }

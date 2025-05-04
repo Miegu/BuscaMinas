@@ -128,7 +128,7 @@ void mostrar_juegos(const tListaJuegos listaJuegos) { //Ya a la hora de insertar
     }
 }
 
-bool guardar_juegos(tListaJuegos& listaJuegos) {
+bool guardar_juegos(const tListaJuegos& listaJuegos) {
     bool apertura = false;
 
     string nombreFichero;
@@ -137,10 +137,9 @@ bool guardar_juegos(tListaJuegos& listaJuegos) {
     cin >> nombreFichero;
     nombreFichero += ".txt";
 
-
     archivoOutput.open(nombreFichero);
 
-    if (archivoOutput.is_open()) { //Falta terminar
+    if (archivoOutput.is_open()) {
         apertura = true;
         archivoOutput << listaJuegos.cont << endl;
         for (int i = 0; i < listaJuegos.cont; i++) {
@@ -149,11 +148,23 @@ bool guardar_juegos(tListaJuegos& listaJuegos) {
                 << actual.tablero.nCols << endl
                 << actual.num_minas << endl;
             // Escribir posiciones de minas
+            for (int f = 0; f < actual.tablero.nFils; f++) {
+                for (int c = 0; c < actual.tablero.nCols; c++) {
+                    if (contiene_mina(actual, f, c)){
+                        archivoOutput << f << " " << c << endl;
+                    }
+                }
+            }
         }
+        
+    } else {
+        cout << "No se pudo abrir el archivo para guardar los juegos." << endl;
     }
 
+    archivoOutput.close();
     return apertura;
 }
+
 
 
 
