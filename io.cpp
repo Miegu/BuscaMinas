@@ -33,13 +33,13 @@ void pedir_pos(int& fila, int& columna) {
 void mostrar_resultado(tJuego juego) {
     mostrar_juego_consola(juego);
     if (juego.estado == PERDIDO) {
-        cout << "La mina a explotado, has perdido :c " << endl;
+        cout << "La mina ha explotado, has perdido :c " << endl;
     }
     else if (juego.estado == GANADO) {
         cout << "Has ganado! No ha explotado ninguna mina." << endl;
     }
     else if (juego.estado == ABANDONADO) {
-        cout << "Partida Abandonada" << endl;
+        cout << "Partida Abandonada. " << endl;
     }
 }
 
