@@ -273,8 +273,7 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 
 			descubrir_celdas(juego, fila, col, listaPos); //Descubre las celdas
 
-			insertar_final(listaUndo, listaPos); //Inserta la lista en la lista final de undo.
-			destruye(listaPos);
+			insertar_final(listaUndo, listaPos); //Inserta la lista en la lista final de undo, mediante una copia.
 
 			if (contiene_mina(juego, fila, col)) {
 				juego.estado = PERDIDO;
@@ -285,6 +284,7 @@ EstadoJuego procesarJugada(tJuego& juego, int fila, int col, tListaUndo& listaUn
 
 			juego.num_jugadas++;
 		}
+		destruye(listaPos); //Destruye la lista de posiciones en memoria dinámica.
 		
 	}
 	return  juego.estado;

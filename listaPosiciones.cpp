@@ -50,6 +50,7 @@ void destruye(tListaPosiciones& listaPosiciones) {
 	for (int i = 0; i < listaPosiciones.cont; i++) {
 		delete listaPosiciones.lista[i]; // Libera cada objeto dinámico
 	}
+
 	delete[] listaPosiciones.lista; // Libera el array de punteros
 	listaPosiciones.lista = nullptr; 
 	listaPosiciones.cont = 0; // Reinicia el contador
